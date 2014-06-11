@@ -1,0 +1,46 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1217" measuredH="781" mockupW="1024" mockupH="768">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="193" y="13" w="1024" h="768" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//measurapp.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::MenuBar" x="193" y="86" w="1024" h="61" measuredW="137" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>MeasurApp</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="1067" y="106" w="-1" h="-1" measuredW="127" measuredH="21" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Welcome%2C%20Username</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::ButtonBar" x="344" y="96" w="444" h="40" measuredW="363" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>2</selectedIndex>
+        <text>My%20Groups%2C%20My%20Units%2C%20My%20Measures%2C%20Reports</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="208" y="162" w="207" h="37" measuredW="167" measuredH="26" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>New%20Binary%20Measure</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Label" x="218" y="218" w="-1" h="-1" measuredW="40" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Name</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TextInput" x="304" y="217" w="131" h="-1" measuredW="79" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="381" y="260" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
