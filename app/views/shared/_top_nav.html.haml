@@ -1,0 +1,24 @@
+.sticky
+  %nav.top-bar{"data-topbar" => ""}
+    %ul.title-area
+      %li.name
+        %h1
+          %a{href: "#"} MesurApp
+      %li.toggle-topbar.menu-icon
+        %a{href: "#"}
+          %span Menu
+    - if @session
+      %section.top-bar-section
+        / Right Nav Section
+        %ul.right
+          %li.active
+            %a{href: "#"} Log In
+          %li.has-dropdown
+            %a{href: "#"} Right Button Dropdown
+            %ul.dropdown
+              %li
+                %a{href: "#"} First link in dropdown
+        / Left Nav Section
+        %ul.left
+          %li
+            %a{href: "#"} Left Nav Button
