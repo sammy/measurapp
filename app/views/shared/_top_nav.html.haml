@@ -11,14 +11,24 @@
       %section.top-bar-section
         / Right Nav Section
         %ul.right
-          %li.active
-            %a{href: "#"} Log In
           %li.has-dropdown
-            %a{href: "#"} Right Button Dropdown
+            %a{href: '#'} #{fa_icon 'user'}&nbsp;&nbsp;Joe Doe 
             %ul.dropdown
               %li
-                %a{href: "#"} First link in dropdown
+                %a{href: '#'} #{fa_icon 'cogs'}&nbsp;&nbsp;Settings
+                %a{href: '#'} #{fa_icon 'sign-out'}&nbsp;&nbsp;Log Out
+        /   %li.has-dropdown
+        /     %a{href: "#"} Right Button Dropdown
+        /     %ul.dropdown
+        /       %li
+        /         %a{href: "#"} First link in dropdown
         / Left Nav Section
         %ul.left
           %li
-            %a{href: "#"} Left Nav Button
+            %a{href: "#"} My Groups 
+          %li
+            %a{href: "#"} My Units
+          %li
+            %a{href: "#"} My Measures
+          %li
+            %a{href: "#"} Reports
