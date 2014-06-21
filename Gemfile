@@ -26,6 +26,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'better_errors'
   gem 'rspec-rails'
+  gem 'fabricator'
+  gem 'faker'
 end
 
 group :test do
