@@ -1,6 +1,6 @@
 .row
   .small-12.columns
-    %h2 #{fa_icon 'plus-circle'} New Group 
+    %h2 #{fa_icon 'edit'} Edit Unit ##UnitName## 
     %hr
     %form
       
@@ -21,15 +21,15 @@
       .row
         .small-5.columns
           .small-3.columns
-            =label_tag :items, 'Items', class: 'left inline'
+            =label_tag :items, 'Groups', class: 'left inline'
           .small-9.columns
             %select{:multiple => 'multiple', :id => 'transfer_select', :name => 'my-select', :class => 'searchable'}
-              %option{value: 1} Item 1
-              %option{value: 2} Item 2
-              %option{value: 3} Item 3
-              %option{value: 4} Item 4
-              %option{value: 5} Item 5
+              %option{value: 1} Group 1
+              %option{value: 2} Group 2
+              %option{value: 3} Group 3
+              %option{value: 4} Group 4
+              %option{value: 5} Group 5
 
       .row
         .small-6.columns
-          %a.button.success.small.radius.right Save
+          %a.button.success.small.radius.right Update

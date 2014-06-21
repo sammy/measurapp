@@ -14,6 +14,10 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require jquery.multi-select
+//= require jquery.quicksearch
+//= functions
 //= require_tree .
+
 
 $(function(){ $(document).foundation(); });

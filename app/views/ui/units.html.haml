@@ -1,0 +1,37 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'user'} My Units 
+    %hr
+    .row
+      .small-6.columns
+        = submit_tag 'New Unit', class: 'button success radius small'
+      .small-3.columns
+      .small-3.columns
+        = text_field_tag :search, 'search', class: 'radius'
+    %table{width: '100%'}
+      %thead
+        %tr
+          %th Name
+          %th Belonging to Group
+          %th Created
+          %th Actions
+        %tbody
+          %tr
+            %td Unit X
+            %td 
+              %span.label.secondary.round Group One
+              %span.label.secondary.round Group Five
+            %td 06 June 2014
+            %td
+              =  link_to "View"
+              =  link_to "Edit"
+              =  link_to "Delete"
+          %tr
+            %td Unit XY
+            %td 
+              %span.label.secondary.round Group Eight
+            %td 14 July 2014
+            %td
+              =  link_to "View"
+              =  link_to "Edit"
+              =  link_to "Delete"

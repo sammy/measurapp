@@ -1,0 +1,47 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'sort-amount-desc'} Measures
+    %hr
+    .row
+      .small-6.columns
+        %a{ href: '#', class: 'button small success dropdown radius', data: {dropdown: 'actions'}} Create Measure
+        %ul{ id: 'actions', class: 'f-dropdown'}
+          %li #{fa_icon 'plus'} Boolean
+          %li #{fa_icon 'plus'} Scale
+        / = submit_tag 'New Unit', class: 'button success radius small'
+      .small-3.columns
+      .small-3.columns
+        = text_field_tag :search, 'search', class: 'radius'
+    %table{width: '100%'}
+      %thead
+        %tr
+          %th Name
+          %th Type
+          %th Linked to
+          %th Actions
+        %tbody
+          %tr
+            %td Midterm
+            %td Scale
+            %td
+              %span.label.secondary.round Group One
+              %span.label.secondary.round Group Five
+            %td
+              =  link_to "View"
+              |
+              =  link_to "Edit"
+              |
+              =  link_to "Delete"
+          %tr
+            %td Has Book
+            %td Boolean
+            %td
+              %span.label.secondary.round Group Eight
+            %td
+              =  link_to "View"
+              |
+              =  link_to "Edit"
+              |
+              =  link_to "Delete"
+
+
