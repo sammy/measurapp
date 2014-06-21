@@ -1,0 +1,32 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'plus-circle'} New Scale Measure
+    %hr
+    %form
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =label_tag :name, 'Name', class: 'left inline'
+          .small-9.columns
+            =text_field_tag :name, nil ,class: 'radius'
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =label_tag :description, 'Description', class: 'left inline'
+          .small-9.columns
+            =text_area_tag :description, nil, rows: '5', class: 'radius'
+
+      .row
+        .small-5.colums
+          .small-3.columns
+            =label_tag :scale, 'Scale', class: 'left inline'
+          .small-4.columns
+            =text_field_tag :min, nil, class: 'radius', placeholder: 'minimum'
+          .small-4.columns
+            =text_field_tag :max, nil, class: 'radius', placeholder: 'maximum'
+      .row
+        .small-5.columns
+          %a.button.success.small.radius.right Save
+      

@@ -1,0 +1,34 @@
+.sticky
+  %nav.top-bar{"data-topbar" => ""}
+    %ul.title-area
+      %li.name
+        %h1
+          %a{href: "#"} MesurApp
+      %li.toggle-topbar.menu-icon
+        %a{href: "#"}
+          %span Menu
+    - if @session
+      %section.top-bar-section
+        / Right Nav Section
+        %ul.right
+          %li.has-dropdown
+            %a{href: '#'} #{fa_icon 'user'}&nbsp;&nbsp;Joe Doe 
+            %ul.dropdown
+              %li
+                %a{href: '#'} #{fa_icon 'cogs'}&nbsp;&nbsp;Settings
+                %a{href: '#'} #{fa_icon 'sign-out'}&nbsp;&nbsp;Log Out
+        /   %li.has-dropdown
+        /     %a{href: "#"} Right Button Dropdown
+        /     %ul.dropdown
+        /       %li
+        /         %a{href: "#"} First link in dropdown
+        / Left Nav Section
+        %ul.left
+          %li
+            %a{href: "#"} My Groups 
+          %li
+            %a{href: "#"} My Units
+          %li
+            %a{href: "#"} My Measures
+          %li
+            %a{href: "#"} Reports
