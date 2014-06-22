@@ -40,9 +40,11 @@ describe SessionsController do
         expect(response).to render_template :new
       end
 
-      it 'displays a flash error message'
+      it 'displays a flash error message' do
+        john = Fabricate(:user)
+        post :create, username: john.username, password: 'wrong'
+        expect(flash[:alert]).to eq('Login Failed. Wrong username or password.')
+      end
     end
   end
-  
-
 end

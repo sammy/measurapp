@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       flash[:success] = 'You have logged in!'
       session[:user] = user.id
     else
-      flash[:alert] = 'Login Failed. Wrong username or password'
+      flash[:alert] = 'Login Failed. Wrong username or password.'
       render :new
     end
   end

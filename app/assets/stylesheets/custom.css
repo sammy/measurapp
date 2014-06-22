@@ -16,3 +16,11 @@ table tr td {
 .top-guttered {
   margin-top: 10px;
 }
+
+.loglinks a {
+  font-size: 0.8em;
+}
+
+.main a:hover {
+  text-decoration: underline;
+}
