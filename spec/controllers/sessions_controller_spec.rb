@@ -12,14 +12,24 @@ describe SessionsController do
   describe 'POST create' do
     
     context 'with valid credentials' do
+      
       it 'redirects to the home page' do
         john = Fabricate(:user)
         post :create, username: john.username, password: john.password
         expect(response).to redirect_to home_path
       end
+ 
+      it 'displays a successful login message' do
+        john = Fabricate(:user)
+        post :create, username: john.username, password: john.password
+        expect(flash[:success]).to eq('You have logged in!')
+      end
+
     end
 
-    context 'with invalid credentials'
+    context 'with invalid credentials' do
+      
+    end
   end
   
 

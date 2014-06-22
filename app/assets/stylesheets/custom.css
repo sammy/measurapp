@@ -12,3 +12,7 @@
 table tr td {
   border-bottom: 1px solid #ccc;
 }
+
+.top-guttered {
+  margin-top: 10px;
+}

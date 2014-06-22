@@ -1,18 +1,19 @@
 .row
   .small-4.small-centered.columns
-    %form
+    = form_tag sessions_path do
       %fieldset
         %legend Login
         .row
           .small-6.columns
-            %label.inline.left{for: "username"} Username
+            = label_tag :username
           .small-6.columns
-            %input#username{type: "text"}
+            = text_field_tag :username
         .row
           .small-6.columns
-            %label.inline.left{for: "password"} Password
+            = label_tag :password
           .small-6.columns
-            %input#password{type: "password"}
+            = password_field_tag :password
         .row
           .small-12.columns
-            %a.button.success.small.radius.right Login
+            = submit_tag 'Login', class: 'button success small radius right'
+            / %a.button.success.small.radius.right Login

@@ -1,0 +1,6 @@
+.row
+  .small-12.columns.top-guttered
+    - flash.each do |name, msg|
+      %div{class: "alert-box #{name} radius", data: {alert: ""}}
+        %a.close &times;
+        = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
