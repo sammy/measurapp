@@ -25,12 +25,12 @@ group :development, :test do
   gem 'pry-nav'
   gem 'sqlite3'
   gem 'better_errors'
-  gem 'rspec-rails'
-  gem 'fabricator'
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'fabrication'
   gem 'faker'
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  # gem 'shoulda-matchers'
 end
 
