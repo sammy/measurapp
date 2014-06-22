@@ -5,13 +5,12 @@ describe GroupsController do
   describe 'GET index' do
     
     context 'with authenticated user' do
+      
       it 'renders the index template' do
         session[:user] = Fabricate(:user).id
         get :index
         expect(response).to render_template :index
       end
-      it 'shows the groups belonging to the user'
-      it 'doesnt show groups that do not belong to the logged in user'
     end
     
 

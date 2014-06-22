@@ -17,48 +17,17 @@
           %th Measures
           %th Actions
         %tbody
-          %tr
-            %td Classroom E1
-            %td 14
-            %td 06 June 2014
-            %td 
-              %span.has_tip.radius{ title: "has book | midterm grade | presence", data: { :tooltip => 1}} 3 assigned
-            %td
-              =  link_to "View"
-              |
-              =  link_to "Edit"
-              |
-              =  link_to "Delete"
-          %tr
-            %td Classroom E1
-            %td 14
-            %td 06 June 2014
-            %td 3 assigned
-            %td
-              =  link_to "View"
-              |
-              =  link_to "Edit"
-              |
-              =  link_to "Delete"
-          %tr
-            %td Classroom E1
-            %td 14
-            %td 06 June 2014
-            %td 2 assigned
-            %td
-              =  link_to "View"
-              |
-              =  link_to "Edit"
-              |
-              =  link_to "Delete"
-          %tr
-            %td Classroom E1
-            %td 14
-            %td 06 June 2014
-            %td None
-            %td
-              =  link_to "View"
-              |
-              =  link_to "Edit"
-              |
-              =  link_to "Delete"
+          - @groups.each do |group|
+            %tr
+              %td= group.name
+              %td 14
+              %td= group.updated_at
+              %td 
+                %span.has_tip.radius{ title: "has book | midterm grade | presence", data: { :tooltip => 1}} 3 assigned
+              %td
+                =  link_to "View"
+                |
+                =  link_to "Edit"
+                |
+                =  link_to "Delete"
+            

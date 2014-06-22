@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   get 'login', to: 'sessions#new'
 
-  get 'home', to: 'ui#groups'
+  get 'home', to: 'groups#index'
 
   resources :sessions, only: [:create]
 
