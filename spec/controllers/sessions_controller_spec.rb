@@ -25,10 +25,22 @@ describe SessionsController do
         expect(flash[:success]).to eq('You have logged in!')
       end
 
+      it 'sets the session cookie' do
+        john = Fabricate(:user)
+        post :create, username: john.username, password: john.password
+        expect(session[:user]).to eq john.id
+      end
+
     end
 
     context 'with invalid credentials' do
-      
+      it 'renders the login template' do
+        john = Fabricate(:user)
+        post :create, username: john.username, password: 'wrong'
+        expect(response).to render_template :new
+      end
+
+      it 'displays a flash error message'
     end
   end
   

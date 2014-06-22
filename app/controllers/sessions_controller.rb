@@ -9,6 +9,10 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       redirect_to home_path
       flash[:success] = 'You have logged in!'
+      session[:user] = user.id
+    else
+      flash[:alert] = 'Login Failed. Wrong username or password'
+      render :new
     end
   end
 
