@@ -7,7 +7,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
 gem 'foundation-rails'
-#gem 'therubyracer'  #use only when developing on linux machine
+gem 'therubyracer'  #use only when developing on linux machine
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'

@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   get 'home', to: 'ui#groups'
 
   resources :sessions, only: [:create]
+
+  resources :groups, only: [:index]
+
 end

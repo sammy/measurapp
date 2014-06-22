@@ -13,4 +13,12 @@ class ApplicationController < ActionController::Base
   def logged_in?
     !!current_user
   end
+
+  def check_session
+    unless logged_in?
+      redirect_to root_path 
+      flash[:alert] = 'You must first sign in to access this page.'
+    end
+  end
+
 end
