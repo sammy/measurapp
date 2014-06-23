@@ -7,16 +7,18 @@
       %li.toggle-topbar.menu-icon
         %a{href: "#"}
           %span Menu
-    - if @session
+    - if logged_in?
       %section.top-bar-section
         / Right Nav Section
         %ul.right
           %li.has-dropdown
-            %a{href: '#'} #{fa_icon 'user'}&nbsp;&nbsp;Joe Doe 
+            %a{href: '#'} #{fa_icon 'user'}&nbsp;&nbsp;#{@current_user.full_name} 
             %ul.dropdown
               %li
                 %a{href: '#'} #{fa_icon 'cogs'}&nbsp;&nbsp;Settings
-                %a{href: '#'} #{fa_icon 'sign-out'}&nbsp;&nbsp;Log Out
+                / %a{href: '#'} #{fa_icon 'sign-out'}&nbsp;&nbsp;Log Out
+                = link_to logout_path, method: :delete do
+                  #{fa_icon 'sign-out'}&nbsp;&nbsp;Log Out
         /   %li.has-dropdown
         /     %a{href: "#"} Right Button Dropdown
         /     %ul.dropdown

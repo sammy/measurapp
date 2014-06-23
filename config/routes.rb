@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'home', to: 'groups#index'
 
+  delete 'logout', to: 'sessions#destroy'
+
   resources :sessions, only: [:create]
 
   resources :groups, only: [:index]
