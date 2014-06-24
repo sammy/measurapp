@@ -1,0 +1,51 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'sun-o'} Register 
+    %hr
+    =form_for @user do |f|
+    
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :username, 'Username', class: 'left inline'
+          .small-9.columns
+            =f.text_field :username,class: 'radius'
+      
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :password, 'Password', class: 'left inline'
+          .small-9.columns
+            =f.password_field :password, rows: '5', class: 'radius'
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :password_confirmation, 'Confirm password', class: 'left inline'
+          .small-9.columns
+            =f.password_field :password_confirmation, rows: '5', class: 'radius'
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :first_name, 'First Name', class: 'left inline'
+          .small-9.columns
+            =f.text_field :first_name, rows: '5', class: 'radius'
+      
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :last_name, 'Last Name', class: 'left inline'
+          .small-9.columns
+            =f.text_field :last_name, rows: '5', class: 'radius'
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =f.label :email, 'Email', class: 'left inline'
+          .small-9.columns
+            =f.text_field :email, rows: '5', class: 'radius'
+
+      .row
+        .small-6.columns
+          %a.button.success.small.radius.right Save
