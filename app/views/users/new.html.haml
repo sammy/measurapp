@@ -48,4 +48,5 @@
 
       .row
         .small-6.columns
-          %a.button.success.small.radius.right Save
+          = f.submit 'Save', :disable_with => 'Saving...', class: 'button success small radius right' 
+          / %a.button.success.small.radius.right Save
