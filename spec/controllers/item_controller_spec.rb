@@ -79,7 +79,6 @@ describe ItemsController do
           expect(flash[:error]).to eq(["Name can't be blank"])
         end
       end
-
     end
 
     context 'with non authenticated user' do

@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
   
   def new
     @item = Item.new
+    @groups = @current_user.groups
   end
 
   def create
