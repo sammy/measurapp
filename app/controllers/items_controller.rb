@@ -8,8 +8,14 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @item.save
-    render :new
+    @item.user_id = @current_user.id
+    if @item.save
+      flash[:success] = "Item #{@item.name} has been succesfully created"
+      redirect_to new_item_path
+    else
+      flash[:error] = @item.errors.full_messages
+      render :new
+    end
   end
   
 

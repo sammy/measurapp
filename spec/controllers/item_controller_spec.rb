@@ -48,20 +48,37 @@ describe ItemsController do
         it 'associates the newly created item with the current user' do
           john = Fabricate(:user)
           session[:user] = john.id
-          post :create, item: { name: 'Item1', description: 'some_text', user_id: john.id }
+          post :create, item: { name: 'Item1', description: 'some_text' }
           expect(john.items.first.name).to eq('Item1')
         end
         
-        it 'renders the new_item template' do
+        it 'redirects to the new_item_path' do
           session[:user] = Fabricate(:user).id
           post :create, item: { name: 'Item1', description: 'some_text'}
-          expect(response).to render_template :new
+          expect(response).to redirect_to new_item_path
         end
         
-        it 'displays a flash message'
+        it 'displays a flash message' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          item = Item.first
+          expect(flash[:success]).to eq("Item #{item.name} has been succesfully created")          
+        end
       end
       
-      context 'with invalid input'
+      context 'with invalid input' do
+        it 'does not create an item when the name is not present' do
+          session[:user] = Fabricate(:user)
+          post :create, item: { description: 'some_text'}
+          expect(Item.count).to eq(0)
+        end
+
+        it 'displays an error message' do
+          session[:user] = Fabricate(:user)
+          post :create, item: { description: 'some_text'}
+          expect(flash[:error]).to eq(["Name can't be blank"])
+        end
+      end
 
     end
 
