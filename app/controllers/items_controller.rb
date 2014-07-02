@@ -11,7 +11,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user_id = @current_user.id
     if @item.save
-      flash[:success] = "Item #{@item.name} has been succesfully created"
+      flash[:success] = "Item #{@item.name.upcase} has been succesfully created"
       redirect_to new_item_path
     else
       flash[:error] = @item.errors.full_messages
@@ -23,6 +23,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :user_id)
+    params.require(:item).permit(:name, :description, :user_id, group_ids: [])
   end
 end

@@ -51,6 +51,16 @@ describe ItemsController do
           post :create, item: { name: 'Item1', description: 'some_text' }
           expect(john.items.first.name).to eq('Item1')
         end
+
+        it 'associates the new item with the selected groups' do
+          john = Fabricate(:user)
+          group_one = Fabricate(:group)
+          group_two = Fabricate(:group)
+          group_three = Fabricate(:group)
+          session[:user] = john.id
+          post :create, item: { name: 'Item1', description: 'some_text', group_ids: [1,3] }
+          expect(Item.first.groups).to eq([group_one, group_three])
+        end
         
         it 'redirects to the new_item_path' do
           session[:user] = Fabricate(:user).id
@@ -62,7 +72,7 @@ describe ItemsController do
           session[:user] = Fabricate(:user).id
           post :create, item: { name: 'Item1', description: 'some_text'}
           item = Item.first
-          expect(flash[:success]).to eq("Item #{item.name} has been succesfully created")          
+          expect(flash[:success]).to eq("Item #{item.name.upcase} has been succesfully created")          
         end
       end
       
