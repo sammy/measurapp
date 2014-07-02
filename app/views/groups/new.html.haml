@@ -1,22 +1,35 @@
 .row
-  .small-4.small-centered.columns
-    = form_tag sessions_path do
-      %fieldset
-        %legend Login
-        .row
-          .small-6.columns
-            = label_tag :username
-          .small-6.columns
-            = text_field_tag :username
-        .row
-          .small-6.columns
-            = label_tag :password
-          .small-6.columns
-            = password_field_tag :password
-        .row
-          .small-6.columns
-            .loglinks
-              = link_to 'Register now', register_path
-              = link_to  'Forgot Password?'
-          .small-6.columns
-            = submit_tag 'Login', class: 'button success small radius right'
+  .small-12.columns
+    %h2 #{fa_icon 'plus-circle'} New Group 
+    %hr
+    %form    
+      
+      .row
+        .small-5.columns
+          .small-3.columns
+            =label_tag :name, 'Name', class: 'left inline'
+          .small-9.columns
+            =text_field_tag :name, nil ,class: 'radius'
+      
+      .row
+        .small-5.columns
+          .small-3.columns
+            =label_tag :description, 'Description', class: 'left inline'
+          .small-9.columns
+            =text_area_tag :description, nil, rows: '5', class: 'radius'
+
+      .row
+        .small-5.columns
+          .small-3.columns
+            =label_tag :items, 'Items', class: 'left inline'
+          .small-9.columns
+            %select{:multiple => 'multiple', :id => 'transfer_select', :name => 'my-select', :class => 'searchable'}
+              %option{value: 1} Item 1
+              %option{value: 2} Item 2
+              %option{value: 3} Item 3
+              %option{value: 4} Item 4
+              %option{value: 5} Item 5
+
+      .row
+        .small-6.columns  
+          %a.button.success.small.radius.right Save

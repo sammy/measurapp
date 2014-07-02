@@ -37,7 +37,10 @@ describe GroupsController do
         get :new
         expect(response).to render_template :new
       end
-      
+
+      it 'sets the group instance variable' do
+
+      end
     end
 
     context 'without authenticated user' do
