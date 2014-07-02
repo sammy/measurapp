@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe User do 
   
-  it { should have_many(:groups) }
+  it { should have_many(:groups) } 
+  it { should validate_presence_of(:username) }
 
   describe '#full_name' do
     it 'combines the users first and last name' do

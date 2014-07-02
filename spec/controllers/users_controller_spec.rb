@@ -56,8 +56,25 @@ describe UsersController do
         expect(ActionMailer::Base.deliveries).to_not be_empty
       end
     end
+
     context 'with invalid input' do
+
+      it 'does not create a user when username is not present' do
+        post :create, user: { password: 'pass', password_confirmation: 'pass', email: 'f@f.com', first_name: 'Some', last_name: 'One' }
+        expect(User.count).to eq(0)
+      end
+
+      it 'does not create a user when username already exists'
+      it 'does not create a user when email is not present'
+      it 'does not create a user when email already exists'
+      it 'does not create a user when password and password confirmation do not match'
+      it 'does not create a user when first name is not present'
+      it 'does not create a user when last name is not present'
+      it 'does not send an email to the user'
+
+
     end
+
+
   end
-  
 end
