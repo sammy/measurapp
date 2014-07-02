@@ -81,8 +81,16 @@ describe UsersController do
         expect(User.count).to eq(1)
       end
 
-      it 'does not create a user when password and password confirmation do not match'
-      it 'does not create a user when first name is not present'
+      it 'does not create a user when password and password confirmation do not match' do
+        post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password11', email: 'flouts@gmail.com', first_name: 'ap', last_name: 'samat' }
+        expect(User.count).to eq(0)
+      end
+
+      it 'does not create a user when first name is not present' do
+        post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', last_name: 'samat' }
+        expect(User.count).to eq(0)
+      end
+
       it 'does not create a user when last name is not present'
       it 'does not send an email to the user'
       it 'renders the new template'
