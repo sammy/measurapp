@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
   has_secure_password
-  validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_presence_of :username, :email
+  validates_uniqueness_of :username, :email
   has_many :groups
 
   def full_name
