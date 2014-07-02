@@ -32,4 +32,17 @@ describe ItemsController do
       end
     end
   end
+
+  describe 'POST create' do 
+    
+    context 'with authenticated user' do
+      it 'creates a new item in the database'
+      it 'associates the newly created item with the current user'
+      it 'renders the new_item template'
+      it 'displays a flash message'
+    end
+
+    context 'with non authenticated user' 
+
+  end
 end
