@@ -10,10 +10,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    binding.pry
-    redirect_to login_path
     @user = User.new(user_params)
     @user.save
+    flash[:success] = 'You have registered successfully. Check your mailbox!'
+    AppMailer.new_registration(@user).deliver
+    redirect_to login_path
   end
 
   private

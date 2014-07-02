@@ -35,17 +35,26 @@ describe UsersController do
 
   describe 'POST create' do
     context 'with valid input' do
+      
       it 'creates a record in the database' do
         post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', first_name: 'ap', last_name: 'samat' }
         expect(User.first.username).to eq('sammy')
       end
-      it 'displays a flash message'
+      
+      it 'displays a flash message' do
+        post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', first_name: 'ap', last_name: 'samat'  }
+        expect(flash[:success]).to eq('You have registered successfully. Check your mailbox!')
+      end
+      
       it 'redirects you to the login path' do
         post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', first_name: 'ap', last_name: 'samat' }
         expect(response).to redirect_to login_path
       end
 
-      it 'send you an registration email'
+      it 'send you an registration email' do
+        post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', first_name: 'ap', last_name: 'samat' }
+        expect(ActionMailer::Base.deliveries).to_not be_empty
+      end
     end
     context 'with invalid input' do
     end
