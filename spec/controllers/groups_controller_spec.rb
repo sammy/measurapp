@@ -27,4 +27,18 @@ describe GroupsController do
       end
     end
   end
+
+  describe 'GET new' do
+
+    context 'with authenticated user' do
+      it 'renders the new template'
+    end
+
+    context 'without authenticated user' do
+      it 'redirects to the login_path'
+      it 'displays a flash message'
+    end
+
+  end
+
 end
