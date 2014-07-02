@@ -30,7 +30,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'fabrication'
   gem 'faker'
-
+  gem 'binding_of_caller'
 end
 
 group :test do
