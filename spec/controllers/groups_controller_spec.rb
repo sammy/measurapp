@@ -39,7 +39,9 @@ describe GroupsController do
       end
 
       it 'sets the group instance variable' do
-
+        session[:user] = Fabricate(:user).id
+        get :new
+        expect(assigns(:group)).to be_kind_of(Group)
       end
     end
 
