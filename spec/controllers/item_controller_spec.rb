@@ -82,7 +82,11 @@ describe ItemsController do
 
     end
 
-    context 'with non authenticated user' 
-
+    context 'with non authenticated user' do
+      it 'redirects to the root_path' do
+        post :create, item: { description: 'some_text'}
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 end
