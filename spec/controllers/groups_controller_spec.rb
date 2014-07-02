@@ -31,7 +31,11 @@ describe GroupsController do
   describe 'GET new' do
 
     context 'with authenticated user' do
-      it 'renders the new template'
+      it 'renders the new template' do
+        session[:user] = Fabricate(:user).id
+        get :new
+        expect(response).to render_template :new
+      end
     end
 
     context 'without authenticated user' do

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create]
 
-  resources :groups, only: [:index]
+  resources :groups, only: [:index, :new]
 
   resources :users, only: [:create]
 
