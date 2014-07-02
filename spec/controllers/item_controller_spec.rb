@@ -36,10 +36,33 @@ describe ItemsController do
   describe 'POST create' do 
     
     context 'with authenticated user' do
-      it 'creates a new item in the database'
-      it 'associates the newly created item with the current user'
-      it 'renders the new_item template'
-      it 'displays a flash message'
+
+      context 'with valid input' do
+      
+        it 'creates a new item in the database' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          expect(Item.count).to eq(1)
+        end
+
+        it 'associates the newly created item with the current user' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          post :create, item: { name: 'Item1', description: 'some_text', user_id: john.id }
+          expect(john.items.first.name).to eq('Item1')
+        end
+        
+        it 'renders the new_item template' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          expect(response).to render_template :new
+        end
+        
+        it 'displays a flash message'
+      end
+      
+      context 'with invalid input'
+
     end
 
     context 'with non authenticated user' 
