@@ -34,6 +34,9 @@ describe UsersController do
   end
 
   describe 'POST create' do
+
+    before { ActionMailer::Base.deliveries = [] }
+
     context 'with valid input' do
       
       it 'creates a record in the database' do
@@ -91,9 +94,20 @@ describe UsersController do
         expect(User.count).to eq(0)
       end
 
-      it 'does not create a user when last name is not present'
-      it 'does not send an email to the user'
-      it 'renders the new template'
+      it 'does not create a user when last name is not present' do
+        post :create, user: { username: 'sammy', password: 'password', password_confirmation: 'password', email: 'flouts@gmail.com', first_name: 'apostolos' }
+        expect(User.count).to eq(0)
+      end
+
+      it 'does not send an email to the user' do
+        post :create, user: {username: 'sammy'}
+        expect(AppMailer.deliveries).to be_empty
+      end
+ 
+      it 'renders the new template' do
+        post :create, user: {username: 'sammy'}
+        expect(response).to render_template :new
+      end
 
 
     end
