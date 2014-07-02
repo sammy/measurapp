@@ -16,6 +16,8 @@ class UsersController < ApplicationController
       AppMailer.new_registration(@user).deliver
       redirect_to login_path
     else
+      # binding.pry
+      flash[:alert] = @user.errors.full_messages.join("<br>").html_safe
       render :new
     end
   end

@@ -109,9 +109,10 @@ describe UsersController do
         expect(response).to render_template :new
       end
 
-
+      it 'displays an explanation of the errors that occured in a flash message' do
+        post :create, user: {username: 'sammy'}
+        expect(flash[:alert]).to_not be_empty
+      end
     end
-
-
   end
 end
