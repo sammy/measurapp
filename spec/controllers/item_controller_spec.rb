@@ -115,10 +115,12 @@ describe ItemsController do
       end
       
       it 'sets the item instance variable' do
-        expect(assigns(:item)).to eq(item)
+        expect(assigns(:item)).to be_kind_of Item
       end
 
-      it 'assigns the correct item to the instance variable'
+      it 'assigns the correct item to the instance variable' do
+        expect(assigns(:item)).to eq(item)
+      end
     end
     
     context 'with non authenticated user'
