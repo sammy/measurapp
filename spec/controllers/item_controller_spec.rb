@@ -103,9 +103,10 @@ describe ItemsController do
 
     context 'with authenticated user' do 
 
+      let(:item) { Fabricate(:item) }
+
       before do
         session[:user] = Fabricate(:user)
-        item = Fabricate(:item)
         get :edit, id: item.id
       end
 
@@ -114,9 +115,9 @@ describe ItemsController do
       end
       
       it 'sets the item instance variable' do
-
+        expect(assigns(:item)).to eq(item)
       end
-      
+
       it 'assigns the correct item to the instance variable'
     end
     
