@@ -123,6 +123,17 @@ describe ItemsController do
       end
     end
     
-    context 'with non authenticated user'
+    context 'with non authenticated user' do
+      
+      it 'redirects to the root_path' do
+        get :edit, id: item.id
+        expect(response).to redirect_to root_path
+      end
+
+      it 'displays an error message' do
+        get :edit, id: item.id
+        expect(flash[:alert]).to eq('Not authorized! You must sign in first.')
+      end
+    end
   end
 end
