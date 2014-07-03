@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe User do 
   
-  it { should have_many(:groups) } 
+  it { should have_many(:groups) }
+  it { should have_many(:items) } 
   it { should validate_presence_of(:username) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:first_name) }
