@@ -101,9 +101,9 @@ describe ItemsController do
 
   describe 'GET edit' do 
 
-    context 'with authenticated user' do 
+    let(:item) { Fabricate(:item) }
 
-      let(:item) { Fabricate(:item) }
+    context 'with authenticated user' do 
 
       before do
         session[:user] = Fabricate(:user)
@@ -132,7 +132,7 @@ describe ItemsController do
 
       it 'displays an error message' do
         get :edit, id: item.id
-        expect(flash[:alert]).to eq('Not authorized! You must sign in first.')
+        expect(flash[:alert]).to eq('You must first sign in to access this page.')
       end
     end
   end

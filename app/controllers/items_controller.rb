@@ -20,8 +20,13 @@ class ItemsController < ApplicationController
   end
   
   def edit
-    @item = Item.find(params[:id])
-    @groups = Group.all
+    if @current_user
+      @item = Item.find(params[:id])
+      @groups = Group.all
+    else
+      redirect_to root_path
+      flash[:alert] = 'Not authorized! You must sign in first.'
+    end
   end   
 
   private
