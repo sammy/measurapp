@@ -19,6 +19,10 @@ class ItemsController < ApplicationController
     end
   end
   
+  def edit
+    @item = Item.find(params[:id])
+    @groups = Group.all
+  end   
 
   private
 
