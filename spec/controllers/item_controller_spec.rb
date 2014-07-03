@@ -103,14 +103,20 @@ describe ItemsController do
 
     context 'with authenticated user' do 
 
-      it 'renders the edit form' do
+      before do
         session[:user] = Fabricate(:user)
         item = Fabricate(:item)
         get :edit, id: item.id
+      end
+
+      it 'renders the edit form' do
         expect(response).to render_template :edit
       end
       
-      it 'sets the item instance variable'
+      it 'sets the item instance variable' do
+
+      end
+      
       it 'assigns the correct item to the instance variable'
     end
     
