@@ -16,8 +16,10 @@ gem 'bcrypt', '~> 3.1.7'         # Use ActiveModel has_secure_password
 gem 'font-awesome-rails'
 gem 'foundicons-rails'
 
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
+group :development do
+  gem 'spring'
+  gem 'letter_opener'
+end
 
 
 group :development, :test do
@@ -28,6 +30,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'fabrication'
   gem 'faker'
+
 end
 
 group :test do
