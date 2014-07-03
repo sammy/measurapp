@@ -2,37 +2,29 @@
   .small-12.columns
     %h2 #{fa_icon 'plus-circle'} New Unit 
     %hr
-    = form_for @item do |f|
+    = render 'form'
+    / = form_for @item do |f|
       
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :name, 'Name', class: 'left inline'
-          .small-9.columns
-            = f.text_field :name, class: 'radius'
+    /   .row
+    /     .small-5.columns
+    /       .small-3.columns
+    /         = f.label :name, 'Name', class: 'left inline'
+    /       .small-9.columns
+    /         = f.text_field :name, class: 'radius'
       
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :description, 'Description', class: 'left inline'
-          .small-9.columns
-            = f.text_area :description, rows: '5', class: 'radius'
+    /   .row
+    /     .small-5.columns
+    /       .small-3.columns
+    /         = f.label :description, 'Description', class: 'left inline'
+    /       .small-9.columns
+    /         = f.text_area :description, rows: '5', class: 'radius'
 
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :items, 'Groups', class: 'left inline'
-          .small-9.columns
-            = f.select :group_ids, options_for_select( @groups.collect { |p| [ p['name'], p['id'] ]}), {}, { multiple: true, id: 'transfer_select', class: 'searchable'}
-          / Commented out as it depends on group implementation
-          / .small-9.columns
-          /   %select{:multiple => 'multiple', :id => 'transfer_select', :name => 'my-select', :class => 'searchable'}
-          /     %option{value: 1} Group 1
-          /     %option{value: 2} Group 2
-          /     %option{value: 3} Group 3
-          /     %option{value: 4} Group 4
-          /     %option{value: 5} Group 5
-
-      .row
-        .small-6.columns
-          = f.submit "Save", class: 'button success small radius right'
+    /   .row
+    /     .small-5.columns
+    /       .small-3.columns
+    /         = f.label :items, 'Groups', class: 'left inline'
+    /       .small-9.columns
+    /         = f.select :group_ids, options_for_select( @groups.collect { |p| [ p['name'], p['id'] ]}), {}, { multiple: true, id: 'transfer_select', class: 'searchable'}
+    /   .row
+    /     .small-6.columns
+    /       = f.submit "Save", class: 'button success small radius right'
