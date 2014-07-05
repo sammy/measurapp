@@ -32,7 +32,14 @@ class ItemsController < ApplicationController
       redirect_to root_path
       flash[:alert] = 'Not authorized! You must sign in first.'
     end
-  end   
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update_attributes(name: params[:name], description: params[:description], group_ids: params[:group_ids])
+    flash[:success] = "Item successfully updated."
+    redirect_to item_path(@item)
+  end
 
   private
 

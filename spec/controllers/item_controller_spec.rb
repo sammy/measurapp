@@ -142,29 +142,81 @@ describe ItemsController do
     let(:item1) { Fabricate(:item, name: 'item one', user_id: 1) }
     let(:item2) { Fabricate(:item, name: 'item two', user_id: 1) }
 
-
     context 'with authenticated user' do
 
       it 'renders the index template' do
-        session[:user] = Fabricate(:user)
+        session[:user] = Fabricate(:user).id
         get :index
         expect(response).to render_template :index
       end
 
       it 'assigns the items instance variable' do
-        session[:user] = Fabricate(:user)
+        session[:user] = Fabricate(:user).id
         get :index
         expect(assigns(:items)).to_not be_nil
       end
 
       it 'populates the items variable with all items belonging to the user' do
-        session[:user] = Fabricate(:user)
+        session[:user] = Fabricate(:user).id
         get :index
         expect(assigns(:items)).to eq( [item1, item2] )        
       end 
     end
 
-    context 'with non authenticated user'
+    context 'with non authenticated user' do
+
+      it 'redirects to the root_path' do
+        get :index
+        expect(response).to redirect_to root_path
+      end
+
+      it 'displays a flash message' do
+        get :index
+        expect(flash[:alert]).to eq('You must first sign in to access this page.')
+      end
+    end
   end
+
+  describe 'PUT update' do
+        
+      5.times { Fabricate(:group) }
+
+      let(:item) { Fabricate(:item, name: 'my item', description: 'my description', group_ids: [1,2,3])}
+
+      context 'with authenticated user' do
+        
+        it 'redirects to the view item path' do
+          session[:user] = Fabricate(:user).id
+          put :update, id: item.id, name: 'my new item'
+          expect(response).to redirect_to item_path(item)
+        end
+
+        it 'correctly updates the name' do
+          session[:user] = Fabricate(:user).id
+          put :update, id: item.id, name: 'my new item', description: 'my description'          
+          expect(Item.first.name).to eq('my new item')
+        end
+
+        it 'correctly updates the description' do
+          session[:user] = Fabricate(:user).id
+          put :update, id: item.id, name: 'my item', description: 'my new description'          
+          expect(Item.first.description).to eq('my new description')
+        end
+        
+        it 'correctly updates the associated groups' do
+          session[:user] = Fabricate(:user).id
+          put :update, id: item.id, name: 'my item', description: 'my description', group_ids: [3,5]          
+          expect(Item.first.group_ids).to eq([3,5])          
+        end
+        
+        it 'displays a flash message' do
+          session[:user] = Fabricate(:user).id
+          put :update, id: item.id, name: 'my item', description: 'my description', group_ids: [3,5]          
+          expect(flash[:success]).to eq("Item successfully updated.")                    
+        end
+      end
+
+      context 'with non authenticated user'
+    end
 
 end
