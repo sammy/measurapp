@@ -1,0 +1,16 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'user'} My Items 
+    %hr
+    .row
+      .small-6.columns
+        = link_to 'Create Item', new_item_path, class: 'button success radius small'
+      .small-3.columns
+      .small-3.columns
+        = text_field_tag :search, 'search', class: 'radius'
+    
+
+    - if @items.empty? 
+      = render 'no_items_message'
+    - else
+      = render 'items_table'

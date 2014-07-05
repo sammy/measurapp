@@ -1,0 +1,19 @@
+%table{width: '100%'}
+  %thead
+    %tr
+      %th Name
+      %th Belonging to Group
+      %th Created
+      %th Actions
+    %tbody
+    - @items.each do |item|
+      %tr
+        %td= item.name
+        %td
+          - item.groups.each do |item_group| 
+            %span.label.secondary.round= item_group.name
+        %td 06 June 2014
+        %td
+          =  link_to "View", item_path(item)
+          =  link_to "Edit", edit_item_path(item)
+          =  link_to "Delete"

@@ -136,4 +136,35 @@ describe ItemsController do
       end
     end
   end
+
+  describe 'GET index' do
+    
+    let(:item1) { Fabricate(:item, name: 'item one', user_id: 1) }
+    let(:item2) { Fabricate(:item, name: 'item two', user_id: 1) }
+
+
+    context 'with authenticated user' do
+
+      it 'renders the index template' do
+        session[:user] = Fabricate(:user)
+        get :index
+        expect(response).to render_template :index
+      end
+
+      it 'assigns the items instance variable' do
+        session[:user] = Fabricate(:user)
+        get :index
+        expect(assigns(:items)).to_not be_nil
+      end
+
+      it 'populates the items variable with all items belonging to the user' do
+        session[:user] = Fabricate(:user)
+        get :index
+        expect(assigns(:items)).to eq( [item1, item2] )        
+      end 
+    end
+
+    context 'with non authenticated user'
+  end
+
 end

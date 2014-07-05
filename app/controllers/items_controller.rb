@@ -1,6 +1,11 @@
 class ItemsController < ApplicationController
 
   before_filter :check_session
+
+  def index
+    @items = @current_user.items
+
+  end
   
   def new
     @item = Item.new
