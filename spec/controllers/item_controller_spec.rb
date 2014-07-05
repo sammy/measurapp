@@ -216,7 +216,32 @@ describe ItemsController do
         end
       end
 
-      context 'with non authenticated user'
+      context 'with non authenticated user' do
+        
+        it 'redirects to the root_path' do
+          put :update, id: 5
+          expect(response).to redirect_to root_path
+        end
+
+        it 'displays a flash message' do
+          get :update, id: 5
+          expect(flash[:alert]).to eq('You must first sign in to access this page.')
+        end        
+      end
+    end
+
+    describe 'GET show' do
+      context 'with authenticated user' do
+        it 'renders the show template' do
+          session[:user] = Fabricate(:user).id
+          get :show, id: 1
+          expect(response).to render_template :index
+        end
+        it 'assigns the item variable'
+        it 'assigns the correct item in the item variable'
+      end
+
+      context ' with non authenticated user'
     end
 
 end
