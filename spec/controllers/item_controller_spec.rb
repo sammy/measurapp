@@ -231,14 +231,29 @@ describe ItemsController do
     end
 
     describe 'GET show' do
+
+      let(:item) { Fabricate(:item) }
+      let(:item2) { Fabricate(:item) }
+
       context 'with authenticated user' do
+        
         it 'renders the show template' do
           session[:user] = Fabricate(:user).id
-          get :show, id: 1
-          expect(response).to render_template :index
+          get :show, id: item.id
+          expect(response).to render_template :show
         end
-        it 'assigns the item variable'
-        it 'assigns the correct item in the item variable'
+        
+        it 'assigns the item variable' do 
+          session[:user] = Fabricate(:user).id
+          get :show, id: item.id
+          expect(assigns(:item)).to_not be_nil          
+        end
+
+        it 'assigns the correct item in the item variable' do
+          session[:user] = Fabricate(:user).id
+          get :show, id: item.id
+          expect(assigns(:item)).to eq(item)                   
+        end
       end
 
       context ' with non authenticated user'
