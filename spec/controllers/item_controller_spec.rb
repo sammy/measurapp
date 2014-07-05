@@ -58,7 +58,7 @@ describe ItemsController do
           group_two = Fabricate(:group)
           group_three = Fabricate(:group)
           session[:user] = john.id
-          post :create, item: { name: 'Item1', description: 'some_text', group_ids: [1,3] }
+          post :create, item: { name: 'Item1', description: 'some_text', group_ids: [group_one.id , group_three.id] }
           expect(Item.first.groups).to eq([group_one, group_three])
         end
         
