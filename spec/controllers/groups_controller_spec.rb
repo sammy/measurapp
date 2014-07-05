@@ -68,12 +68,14 @@ describe GroupsController do
     
     context 'with authenticated user' do
 
-      let(:mike)  { Fabricate(:user) }
-      let(:group) { Fabricate.attributes_for(:group) }
-      
+      let(:mike)    { Fabricate(:user) }
+      let(:group)   { Fabricate.attributes_for(:group) }
+      let(:item_1)  { Fabricate(:item) }
+      let(:item_2)  { Fabricate(:item) }
+
       before do
         session[:user] = mike.id
-        post :create, group: group
+        post :create, group: group.merge(item_ids: [item_1.id, item_2.id])
       end
 
       it 'redirects to the new_group_path' do
@@ -81,10 +83,19 @@ describe GroupsController do
       end
 
       
-      it 'creates a new group in the database'
-      it 'assigns the new group to the current user'
-      it 'associates selected items with the group'
-      
+      it 'creates a new group in the database' do
+        expect(Group.last.name).to eq(group[:name])
+        expect(Group.last.description).to eq(group[:description])
+      end
+
+      it 'assigns the new group to the current user' do
+        expect(Group.last.user_id).to eq(mike.id)
+      end
+
+      it 'associates selected items with the group' do
+        expect(Group.last.items).to eq([item_1, item_2])
+      end
+
       # it 'displays a flash message' do
       #   expect(flash[:success]).to eq("Group #{group.name} was successfully created!")
       # end
