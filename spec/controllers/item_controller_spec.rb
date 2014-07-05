@@ -187,31 +187,31 @@ describe ItemsController do
         
         it 'redirects to the view item path' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, name: 'my new item'
+          put :update, id: item.id, item: {name: 'my new item'}
           expect(response).to redirect_to item_path(item)
         end
 
         it 'correctly updates the name' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, name: 'my new item', description: 'my description'          
+          put :update, id: item.id, item: {name: 'my new item', description: 'my description'}          
           expect(Item.first.name).to eq('my new item')
         end
 
         it 'correctly updates the description' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, name: 'my item', description: 'my new description'          
+          put :update, id: item.id, item: {name: 'my item', description: 'my new description'}         
           expect(Item.first.description).to eq('my new description')
         end
         
         it 'correctly updates the associated groups' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, name: 'my item', description: 'my description', group_ids: [3,5]          
+          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(Item.first.group_ids).to eq([3,5])          
         end
         
         it 'displays a flash message' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, name: 'my item', description: 'my description', group_ids: [3,5]          
+          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(flash[:success]).to eq("Item successfully updated.")                    
         end
       end

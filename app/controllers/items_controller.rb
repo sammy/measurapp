@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    @item.update_attributes(name: params[:name], description: params[:description], group_ids: params[:group_ids])
+    @item.update_attributes(name: params[:item][:name], description: params[:item][:description], group_ids: params[:item][:group_ids])
     flash[:success] = "Item successfully updated."
     redirect_to item_path(@item)
   end
