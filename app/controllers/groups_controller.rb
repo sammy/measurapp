@@ -10,4 +10,9 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+  def create
+    redirect_to new_group_path
+    flash[:success] = "Group #{group.name} was successfully created!"
+  end
+
 end
