@@ -96,9 +96,11 @@ describe GroupsController do
         expect(Group.last.items).to eq([item_1, item_2])
       end
 
-      # it 'displays a flash message' do
-      #   expect(flash[:success]).to eq("Group #{group.name} was successfully created!")
-      # end
+      it 'displays a flash message' do
+        expect(flash[:success]).to eq("Group #{group[:name]} was successfully created!")
+      end
+
+      
     end
 
     context 'with non authenticated user'
