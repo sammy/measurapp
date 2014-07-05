@@ -269,7 +269,16 @@ describe ItemsController do
         end
       end
 
-      context ' with non authenticated user'
-    end
+      context ' with non authenticated user' do
+        it 'redirects to the root_path' do
+          get :show, id: item.id
+          expect(response).to redirect_to root_path
+        end
 
+        it 'displays a flash message' do
+          get :show, id: item.id
+          expect(flash[:alert]).to eq('You must first sign in to access this page.')
+        end
+      end
+    end
 end
