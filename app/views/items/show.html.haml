@@ -1,0 +1,15 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'search-plus'} #{@item.name}
+    %hr
+    %form
+      
+      .row
+        .small-12.columns
+          %blockquote= @item.description
+      .row
+        .small-12.columns
+          %h4 Member of Groups
+          %ul
+            - @item.groups.each do |group|
+              %li= group.name
