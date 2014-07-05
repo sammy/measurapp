@@ -232,27 +232,40 @@ describe ItemsController do
 
     describe 'GET show' do
 
-      let(:item) { Fabricate(:item) }
+      let(:john) { Fabricate(:user) }
+      let(:item) { Fabricate(:item, user_id: john.id) }
       let(:item2) { Fabricate(:item) }
 
       context 'with authenticated user' do
         
         it 'renders the show template' do
-          session[:user] = Fabricate(:user).id
+          session[:user] = john.id
           get :show, id: item.id
           expect(response).to render_template :show
         end
         
         it 'assigns the item variable' do 
-          session[:user] = Fabricate(:user).id
+          session[:user] = john.id
           get :show, id: item.id
           expect(assigns(:item)).to_not be_nil          
         end
 
         it 'assigns the correct item in the item variable' do
-          session[:user] = Fabricate(:user).id
+          session[:user] = john.id
           get :show, id: item.id
           expect(assigns(:item)).to eq(item)                   
+        end
+
+        it 'does not show another users items' do
+          session[:user] = john.id
+          get :show, id: item2.id
+          expect(response).to redirect_to items_path
+        end
+
+        it 'diplays a flash message if user tries to access another users item, or non existent item' do
+          session[:user] = john.id
+          get :show, id: item2.id
+          expect(flash[:info]).to eq('Item does not exist!')
         end
       end
 

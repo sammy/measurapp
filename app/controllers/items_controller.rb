@@ -7,7 +7,10 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = @current_user.items.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    flash[:info] = 'Item does not exist!'
+    redirect_to items_path
   end
   
   def new
