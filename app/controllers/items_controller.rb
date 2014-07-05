@@ -19,8 +19,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
-    @item.user_id = @current_user.id
+    @item = Item.new(item_params.merge(user_id: @current_user.id))
     if @item.save
       flash[:success] = "Item #{@item.name.upcase} has been succesfully created"
       redirect_to new_item_path
