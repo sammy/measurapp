@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
   def edit
     if @current_user
       @item = Item.find_by(slug: params[:id])
-      @groups = Group.all
+      @groups = @current_user.groups
     else
       redirect_to root_path
       flash[:alert] = 'Not authorized! You must sign in first.'
