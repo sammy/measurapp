@@ -65,13 +65,13 @@ describe GroupsController do
   end
 
   describe 'POST create' do
-    
-    context 'with authenticated user' do
+  
+    let(:mike)    { Fabricate(:user) }
+    let(:group)   { Fabricate.attributes_for(:group) }
+    let(:item_1)  { Fabricate(:item) }
+    let(:item_2)  { Fabricate(:item) }
 
-      let(:mike)    { Fabricate(:user) }
-      let(:group)   { Fabricate.attributes_for(:group) }
-      let(:item_1)  { Fabricate(:item) }
-      let(:item_2)  { Fabricate(:item) }
+    context 'with authenticated user' do
       
       before do
         session[:user] = mike.id
@@ -114,7 +114,14 @@ describe GroupsController do
     end
 
     context 'with non authenticated user' do
+      it 'redirects to the root path' do
+        post :create, group: group.merge(item_ids: [item_1.id, item_2.id])
+        expect(response).to redirect_to root_path
+      end
+      it 'displays an error message' do
+        post :create, group: group.merge(item_ids: [item_1.id, item_2.id])
+        expect(flash[:alert]).to eq('You must first sign in to access this page.')
+      end
     end
   end
-
 end

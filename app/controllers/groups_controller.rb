@@ -13,9 +13,13 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params.merge(user_id: @current_user.id))
-    @group.save
-    redirect_to new_group_path
-    flash[:success] = "Group #{@group.name} was successfully created!"
+    if @group.save
+      redirect_to new_group_path
+      flash[:success] = "Group #{@group.name} was successfully created!"
+    else
+      flash[:alert] = @group.errors.full_messages
+      redirect_to new_group_path
+    end
   end
 
   private
