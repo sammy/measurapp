@@ -95,8 +95,12 @@ describe GroupsController do
     end
 
     it 'renders the edit template' do
-
+      session[:user] = Fabricate(:user).id
+      group = Fabricate(:group, user_id: session[:user])
+      get :edit, id: group.id
+      expect(response).to render_template :edit
     end
+    
     it 'assigns the group instance variable'
     it 'populates the group instance variable with the correct group'
 
