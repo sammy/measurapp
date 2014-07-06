@@ -2,7 +2,7 @@ shared_examples "require login" do
   it 'redirects to the root path' do
     clear_current_user
     action
-    response.should redirect_to root_path
+    expect(response).to redirect_to root_path
   end
 
   it 'displays a flash message' do

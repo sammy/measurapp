@@ -89,8 +89,17 @@ describe GroupsController do
   end
 
   describe "GET edit" do
+    
     it_behaves_like "require login" do
       let(:action) { get :edit, id: 'test' }
-    end    
+    end
+
+    it 'renders the edit template' do
+
+    end
+    it 'assigns the group instance variable'
+    it 'populates the group instance variable with the correct group'
+
+
   end
 end
