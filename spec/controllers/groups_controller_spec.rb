@@ -138,6 +138,56 @@ describe GroupsController do
     it_behaves_like 'require login' do
       let(:action) { put :update, id: 'some-group' }
     end
+
+    it 'redirects to the view group path' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      group = Fabricate(:group, user_id: jim.id)
+      put :update, id: group.slug, group: { name: 'a new name' }
+      expect(response).to redirect_to group_path(group)
+    end
+
+    it 'displays a flash message' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      group = Fabricate(:group, user_id: jim.id)
+      put :update, id: group.slug, group: { name: 'a new name' }
+      expect(flash[:success]).to eq("Group A NEW NAME was successfully updated.")
+    end
+
+    it 'assigns the group instance variable' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      group = Fabricate(:group, user_id: jim.id)
+      put :update, id: group.slug, group: { name: 'a new name' }
+      expect(assigns(:group)).to be_present
+    end
+
+    it 'updates the name of the group' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      group = Fabricate(:group, user_id: jim.id)
+      put :update, id: group.slug, group: { name: 'a new name' }
+      expect(Group.first.name).to eq('a new name')
+    end
+
+    it 'updates the description of the group' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      group = Fabricate(:group, user_id: jim.id)
+      put :update, id: group.slug, group: { name: group.name, description: 'a new description' }
+      expect(Group.first.description).to eq('a new description')
+    end
+
+    it 'updates the associated items' do
+      jim = Fabricate(:user)
+      set_current_user(jim)
+      4.times { Fabricate(:item) }
+      group = Fabricate(:group, user_id: jim.id, item_ids: [1,2,3,4])
+      put :update, id: group.slug, group: { name: group.name, description: group.description, item_ids: [2,4] }
+      expect(Group.first.item_ids).to eq([2,4])
+    end
+
     
   end
 end

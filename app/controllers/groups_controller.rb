@@ -28,7 +28,13 @@ class GroupsController < ApplicationController
   end
 
   def update
-    
+    @group = Group.find_by(slug: params[:id])
+    @group.update_attributes( name:         params[:group][:name], 
+                              description:  params[:group][:description],
+                              item_ids:     params[:group][:item_ids] 
+                              )
+    redirect_to group_path(@group)
+    flash[:success] = "Group #{@group.name.upcase} was successfully updated."
   end
 
   private
