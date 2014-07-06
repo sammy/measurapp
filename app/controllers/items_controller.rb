@@ -8,9 +8,10 @@ class ItemsController < ApplicationController
 
   def show
     @item = @current_user.items.find_by(slug: params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:info] = 'Item does not exist!'
-    redirect_to items_path
+    if @item.nil?
+      flash[:info] = 'Item does not exist!'
+      redirect_to items_path
+    end
   end
   
   def new
@@ -44,6 +45,17 @@ class ItemsController < ApplicationController
     @item.update_attributes(name: params[:item][:name], description: params[:item][:description], group_ids: params[:item][:group_ids])
     flash[:success] = "Item successfully updated."
     redirect_to item_path(@item)
+  end
+
+  def destroy
+    @item = @current_user.items.find_by(slug: params[:id])
+    if @item
+      @item.destroy
+      flash[:info] = "Item #{@item.name} has been deleted."
+    else
+      flash[:alert] = "Item does not exist!"
+    end
+    redirect_to items_path
   end
 
   private

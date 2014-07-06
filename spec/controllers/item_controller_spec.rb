@@ -107,7 +107,7 @@ describe ItemsController do
 
       before do
         session[:user] = Fabricate(:user)
-        get :edit, id: item.id
+        get :edit, id: item.slug
       end
 
       it 'renders the edit form' do
@@ -126,12 +126,12 @@ describe ItemsController do
     context 'with non authenticated user' do
       
       it 'redirects to the root_path' do
-        get :edit, id: item.id
+        get :edit, id: item.slug
         expect(response).to redirect_to root_path
       end
 
       it 'displays an error message' do
-        get :edit, id: item.id
+        get :edit, id: item.slug
         expect(flash[:alert]).to eq('You must first sign in to access this page.')
       end
     end
@@ -187,31 +187,31 @@ describe ItemsController do
         
         it 'redirects to the view item path' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my new item'}
+          put :update, id: item.slug, item: {name: 'my new item'}
           expect(response).to redirect_to item_path(item)
         end
 
         it 'correctly updates the name' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my new item', description: 'my description'}          
+          put :update, id: item.slug, item: {name: 'my new item', description: 'my description'}          
           expect(Item.first.name).to eq('my new item')
         end
 
         it 'correctly updates the description' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my new description'}         
+          put :update, id: item.slug, item: {name: 'my item', description: 'my new description'}         
           expect(Item.first.description).to eq('my new description')
         end
         
         it 'correctly updates the associated groups' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
+          put :update, id: item.slug, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(Item.first.group_ids).to eq([3,5])          
         end
         
         it 'displays a flash message' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
+          put :update, id: item.slug, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(flash[:success]).to eq("Item successfully updated.")                    
         end
       end
@@ -234,49 +234,99 @@ describe ItemsController do
 
       let(:john) { Fabricate(:user) }
       let(:item) { Fabricate(:item, user_id: john.id) }
-      let(:item2) { Fabricate(:item) }
+      let(:item2) { Fabricate(:item, user_id: 1900) }
 
       context 'with authenticated user' do
         
         it 'renders the show template' do
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(response).to render_template :show
         end
         
         it 'assigns the item variable' do 
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(assigns(:item)).to_not be_nil          
         end
 
         it 'assigns the correct item in the item variable' do
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(assigns(:item)).to eq(item)                   
         end
 
         it 'does not show another users items' do
           session[:user] = john.id
-          get :show, id: item2.id
+          get :show, id: item2.slug
           expect(response).to redirect_to items_path
         end
 
         it 'diplays a flash message if user tries to access another users item, or non existent item' do
           session[:user] = john.id
-          get :show, id: item2.id
+          get :show, id: item2.slug
           expect(flash[:info]).to eq('Item does not exist!')
         end
       end
 
       context ' with non authenticated user' do
         it 'redirects to the root_path' do
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(response).to redirect_to root_path
         end
 
         it 'displays a flash message' do
-          get :show, id: item.id
+          get :show, id: item.slug
+          expect(flash[:alert]).to eq('You must first sign in to access this page.')
+        end
+      end
+    end
+
+    describe 'DELETE destroy' do
+      
+      context 'with authenticated user' do
+
+        it 'destroys the selected record' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(Item.count).to eq(0)
+        end
+
+        it 'redirects to the items_path' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(response).to redirect_to items_path
+        end
+
+        it 'does not delete another users items' do
+          john = Fabricate(:user)
+          alice = Fabricate(:user)
+          item = Fabricate(:item, user_id: alice.id)
+          session[:user] = john.id
+          delete :destroy, id: item.slug
+          expect(Item.count).to eq(1)
+        end
+        
+        it 'diplays a flash message' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(flash[:info]).to eq("Item #{item.name} has been deleted.")
+        end
+      end
+      
+      context 'with non authenticated user' do
+        it 'redirects to the root path' do
+          delete :destroy, id: 'some-item'
+          expect(response).to redirect_to root_path
+        end
+        it 'displays an error message' do
+          delete :destroy, id: 'some-item'
           expect(flash[:alert]).to eq('You must first sign in to access this page.')
         end
       end
