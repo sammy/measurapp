@@ -287,11 +287,13 @@ describe ItemsController do
       context 'with authenticated user' do
 
         it 'destroys the selected record' do
-          session[:user] = Fabricate(:user)
-          item = Fabricate(:item, slug: 'item')
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
           delete :destroy, id: item.slug
           expect(Item.count).to eq(0)
         end
+
         it 'redirects to the items_path'
         it 'diplays a flash message'
       end
