@@ -294,11 +294,32 @@ describe ItemsController do
           expect(Item.count).to eq(0)
         end
 
-        it 'redirects to the items_path'
-        it 'diplays a flash message'
+        it 'redirects to the items_path' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(response).to redirect_to items_path
+        end
+        
+        it 'diplays a flash message' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(flash[:info]).to eq("Item #{item.name} has been deleted.")
+        end
       end
       
       context 'with non authenticated user' do
+        it 'redirects to the root path' do
+          delete :destroy, id: 'some-item'
+          expect(response).to redirect_to root_path
+        end
+        it 'displays an error message' do
+          delete :destroy, id: 'some-item'
+          expect(flash[:alert]).to eq('You must first sign in to access this page.')
+        end
       end
     end
 end

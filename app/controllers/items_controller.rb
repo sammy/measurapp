@@ -50,6 +50,7 @@ class ItemsController < ApplicationController
   def destroy
     @item = @current_user.items.find_by(slug: params[:id])
     @item.destroy
+    flash[:info] = "Item #{@item.name} has been deleted."
     redirect_to items_path
   end
 
