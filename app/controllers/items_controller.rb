@@ -49,8 +49,12 @@ class ItemsController < ApplicationController
 
   def destroy
     @item = @current_user.items.find_by(slug: params[:id])
-    @item.destroy
-    flash[:info] = "Item #{@item.name} has been deleted."
+    if @item
+      @item.destroy
+      flash[:info] = "Item #{@item.name} has been deleted."
+    else
+      flash[:alert] = "Item does not exist!"
+    end
     redirect_to items_path
   end
 

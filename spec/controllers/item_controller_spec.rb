@@ -301,6 +301,15 @@ describe ItemsController do
           delete :destroy, id: item.slug
           expect(response).to redirect_to items_path
         end
+
+        it 'does not delete another users items' do
+          john = Fabricate(:user)
+          alice = Fabricate(:user)
+          item = Fabricate(:item, user_id: alice.id)
+          session[:user] = john.id
+          delete :destroy, id: item.slug
+          expect(Item.count).to eq(1)
+        end
         
         it 'diplays a flash message' do
           john = Fabricate(:user)
