@@ -8,9 +8,10 @@ class ItemsController < ApplicationController
 
   def show
     @item = @current_user.items.find_by(slug: params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:info] = 'Item does not exist!'
-    redirect_to items_path
+    if @item.nil?
+      flash[:info] = 'Item does not exist!'
+      redirect_to items_path
+    end
   end
   
   def new
