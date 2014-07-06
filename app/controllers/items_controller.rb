@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = @current_user.items.find(params[:id])
+    @item = @current_user.items.find_by(slug: params[:id])
   rescue ActiveRecord::RecordNotFound
     flash[:info] = 'Item does not exist!'
     redirect_to items_path
@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
   
   def edit
     if @current_user
-      @item = Item.find(params[:id])
+      @item = Item.find_by(slug: params[:id])
       @groups = Group.all
     else
       redirect_to root_path
@@ -40,7 +40,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
+    @item = Item.find_by(slug: params[:id])
     @item.update_attributes(name: params[:item][:name], description: params[:item][:description], group_ids: params[:item][:group_ids])
     flash[:success] = "Item successfully updated."
     redirect_to item_path(@item)
