@@ -2,31 +2,4 @@
   .small-12.columns
     %h2 #{fa_icon 'plus-circle'} New Group 
     %hr
-    = form_for @group do |f|
-      
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :name, 'Name', class: 'left inline'
-          .small-9.columns
-            = f.text_field :name, class: 'radius'
-      
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :description, 'Description', class: 'left inline'
-          .small-9.columns
-            = f.text_area :description, rows: '5', class: 'radius'
-
-      .row
-        .small-5.columns
-          .small-3.columns
-            = f.label :items, 'Items', class: 'left inline'
-          .small-9.columns
-            = f.select :item_ids, options_for_select( @items.collect { |p| [ p['name'], p['id'] ]},
-                                                   @group.items.map { |i| i.id  }),
-                                                   {}, 
-                                                   { multiple: true, id: 'transfer_select', class: 'searchable'}
-      .row
-        .small-6.columns
-          = f.submit "Save", class: 'button success small radius right'
+    = render 'form' 

@@ -97,13 +97,47 @@ describe GroupsController do
     it 'renders the edit template' do
       session[:user] = Fabricate(:user).id
       group = Fabricate(:group, user_id: session[:user])
-      get :edit, id: group.id
+      get :edit, id: group.slug
       expect(response).to render_template :edit
     end
+
+    it 'assigns the group instance variable' do
+      session[:user] = Fabricate(:user).id
+      group = Fabricate(:group, user_id: session[:user])
+      get :edit, id: group.slug
+      expect(assigns(:group)).to be_present
+    end
+
+    it 'populates the group instance variable with the correct group' do
+      session[:user] = Fabricate(:user).id
+      group = Fabricate(:group, user_id: session[:user])
+      get :edit, id: group.slug
+      expect(assigns(:group)).to eq(group)
+    end
+
+    it 'assigns the items variable' do
+      session[:user] = Fabricate(:user).id
+      group = Fabricate(:group, user_id: session[:user])
+      2.times { Fabricate(:item, user_id: session[:user]) }
+      get :edit, id: group.slug
+      expect(assigns(:items)).to be_present
+    end
+
+    it 'populates the items variable with items that belong only to the current user' do
+      session[:user] = Fabricate(:user).id
+      group = Fabricate(:group, user_id: session[:user])
+      my_item = Fabricate(:item, user_id: session[:user])
+      2.times { Fabricate(:item, user_id: 666) }
+      get :edit, id: group.slug
+      expect(assigns(:items)).to eq([my_item])
+    end
+  end
+
+  describe "PUT update" do
+
+    it_behaves_like 'require login' do
+      let(:action) { put :update, id: 'some-group' }
+    end
     
-    it 'assigns the group instance variable'
-    it 'populates the group instance variable with the correct group'
-
-
   end
 end

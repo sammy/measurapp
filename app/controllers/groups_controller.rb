@@ -23,6 +23,11 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @group = Group.find_by(slug: params[:id])
+    @items = @current_user.items
+  end
+
+  def update
     
   end
 
