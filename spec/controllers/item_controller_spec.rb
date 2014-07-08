@@ -3,80 +3,98 @@ require 'rails_helper'
 describe ItemsController do 
 
   describe 'GET new' do
+
+    context 'with authenticated user' do
       
-    it_behaves_like 'require login' do
-      let(:action) { get :new }
+      it 'renders the new template' do
+        session[:user] = Fabricate(:user).id
+        get :new
+        expect(response).to render_template :new
+      end
+      
+      it 'assigns the item instance variable' do
+        session[:user] = Fabricate(:user).id
+        get :new
+        expect(assigns(:item)).to be_kind_of(Item)
+      end
     end
 
-    it 'renders the new template' do
-      session[:user] = Fabricate(:user).id
-      get :new
-      expect(response).to render_template :new
-    end
-    
-    it 'assigns the item instance variable' do
-      session[:user] = Fabricate(:user).id
-      get :new
-      expect(assigns(:item)).to be_kind_of(Item)
+    context 'without authenticated user' do
+      
+      it 'redirects to the root_path' do
+        get :new
+        expect(response).to redirect_to root_path
+      end
+
+      it 'displays a flash message' do
+        get :new
+        expect(flash[:alert]).to eq('You must first sign in to access this page.')
+      end
     end
   end
 
   describe 'POST create' do 
     
-    it_behaves_like 'require login' do
-      let(:action) { post :create, item: { name: 'Item1', description: 'some_text' } }
-    end
+    context 'with authenticated user' do
 
-    context 'with valid input' do
-    
-      it 'creates a new item in the database' do
-        session[:user] = Fabricate(:user).id
-        post :create, item: { name: 'Item1', description: 'some_text'}
-        expect(Item.count).to eq(1)
-      end
+      context 'with valid input' do
+      
+        it 'creates a new item in the database' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          expect(Item.count).to eq(1)
+        end
 
-      it 'associates the newly created item with the current user' do
-        john = Fabricate(:user)
-        session[:user] = john.id
-        post :create, item: { name: 'Item1', description: 'some_text' }
-        expect(john.items.first.name).to eq('Item1')
-      end
+        it 'associates the newly created item with the current user' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          post :create, item: { name: 'Item1', description: 'some_text' }
+          expect(john.items.first.name).to eq('Item1')
+        end
 
-      it 'associates the new item with the selected groups' do
-        john = Fabricate(:user)
-        group_one = Fabricate(:group)
-        group_two = Fabricate(:group)
-        group_three = Fabricate(:group)
-        session[:user] = john.id
-        post :create, item: { name: 'Item1', description: 'some_text', group_ids: [group_one.id , group_three.id] }
-        expect(Item.first.groups).to eq([group_one, group_three])
+        it 'associates the new item with the selected groups' do
+          john = Fabricate(:user)
+          group_one = Fabricate(:group)
+          group_two = Fabricate(:group)
+          group_three = Fabricate(:group)
+          session[:user] = john.id
+          post :create, item: { name: 'Item1', description: 'some_text', group_ids: [group_one.id , group_three.id] }
+          expect(Item.first.groups).to eq([group_one, group_three])
+        end
+        
+        it 'redirects to the new_item_path' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          expect(response).to redirect_to new_item_path
+        end
+        
+        it 'displays a flash message' do
+          session[:user] = Fabricate(:user).id
+          post :create, item: { name: 'Item1', description: 'some_text'}
+          item = Item.first
+          expect(flash[:success]).to eq("Item #{item.name.upcase} has been succesfully created")          
+        end
       end
       
-      it 'redirects to the new_item_path' do
-        session[:user] = Fabricate(:user).id
-        post :create, item: { name: 'Item1', description: 'some_text'}
-        expect(response).to redirect_to new_item_path
-      end
-      
-      it 'displays a flash message' do
-        session[:user] = Fabricate(:user).id
-        post :create, item: { name: 'Item1', description: 'some_text'}
-        item = Item.first
-        expect(flash[:success]).to eq("Item #{item.name.upcase} has been succesfully created")          
+      context 'with invalid input' do
+        it 'does not create an item when the name is not present' do
+          session[:user] = Fabricate(:user)
+          post :create, item: { description: 'some_text'}
+          expect(Item.count).to eq(0)
+        end
+
+        it 'displays an error message' do
+          session[:user] = Fabricate(:user)
+          post :create, item: { description: 'some_text'}
+          expect(flash[:error]).to eq(["Name can't be blank"])
+        end
       end
     end
-    
-    context 'with invalid input' do
-      it 'does not create an item when the name is not present' do
-        session[:user] = Fabricate(:user)
-        post :create, item: { description: 'some_text'}
-        expect(Item.count).to eq(0)
-      end
 
-      it 'displays an error message' do
-        session[:user] = Fabricate(:user)
+    context 'with non authenticated user' do
+      it 'redirects to the root_path' do
         post :create, item: { description: 'some_text'}
-        expect(flash[:error]).to eq(["Name can't be blank"])
+        expect(response).to redirect_to root_path
       end
     end
   end
@@ -85,25 +103,37 @@ describe ItemsController do
 
     let(:item) { Fabricate(:item) }
 
-    before do
-      session[:user] = Fabricate(:user)
-      get :edit, id: item.slug
-    end
+    context 'with authenticated user' do 
 
-    it_behaves_like 'require login' do
-      let(:action) { get :edit, id: item.slug }
-    end
+      before do
+        session[:user] = Fabricate(:user)
+        get :edit, id: item.slug
+      end
 
-    it 'renders the edit form' do
-      expect(response).to render_template :edit
+      it 'renders the edit form' do
+        expect(response).to render_template :edit
+      end
+      
+      it 'sets the item instance variable' do
+        expect(assigns(:item)).to be_kind_of Item
+      end
+
+      it 'assigns the correct item to the instance variable' do
+        expect(assigns(:item)).to eq(item)
+      end
     end
     
-    it 'sets the item instance variable' do
-      expect(assigns(:item)).to be_kind_of Item
-    end
+    context 'with non authenticated user' do
+      
+      it 'redirects to the root_path' do
+        get :edit, id: item.slug
+        expect(response).to redirect_to root_path
+      end
 
-    it 'assigns the correct item to the instance variable' do
-      expect(assigns(:item)).to eq(item)
+      it 'displays an error message' do
+        get :edit, id: item.slug
+        expect(flash[:alert]).to eq('You must first sign in to access this page.')
+      end
     end
   end
 
@@ -149,7 +179,7 @@ describe ItemsController do
 
   describe 'PUT update' do
         
-      
+      5.times { Fabricate(:group) }
 
       let(:item) { Fabricate(:item, name: 'my item', description: 'my description', group_ids: [1,2,3])}
 
@@ -157,33 +187,31 @@ describe ItemsController do
         
         it 'redirects to the view item path' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my new item'}
+          put :update, id: item.slug, item: {name: 'my new item'}
           expect(response).to redirect_to item_path(item)
         end
 
         it 'correctly updates the name' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my new item', description: 'my description'}          
+          put :update, id: item.slug, item: {name: 'my new item', description: 'my description'}          
           expect(Item.first.name).to eq('my new item')
         end
 
         it 'correctly updates the description' do
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my new description'}         
+          put :update, id: item.slug, item: {name: 'my item', description: 'my new description'}         
           expect(Item.first.description).to eq('my new description')
         end
         
         it 'correctly updates the associated groups' do
-          5.times { Fabricate(:group) }
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
+          put :update, id: item.slug, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(Item.first.group_ids).to eq([3,5])          
         end
         
         it 'displays a flash message' do
-          5.times { Fabricate(:group) }
           session[:user] = Fabricate(:user).id
-          put :update, id: item.id, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
+          put :update, id: item.slug, item: {name: 'my item', description: 'my description', group_ids: [3,5]}
           expect(flash[:success]).to eq("Item successfully updated.")                    
         end
       end
@@ -206,49 +234,99 @@ describe ItemsController do
 
       let(:john) { Fabricate(:user) }
       let(:item) { Fabricate(:item, user_id: john.id) }
-      let(:item2) { Fabricate(:item) }
+      let(:item2) { Fabricate(:item, user_id: 1900) }
 
       context 'with authenticated user' do
         
         it 'renders the show template' do
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(response).to render_template :show
         end
         
         it 'assigns the item variable' do 
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(assigns(:item)).to_not be_nil          
         end
 
         it 'assigns the correct item in the item variable' do
           session[:user] = john.id
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(assigns(:item)).to eq(item)                   
         end
 
         it 'does not show another users items' do
           session[:user] = john.id
-          get :show, id: item2.id
+          get :show, id: item2.slug
           expect(response).to redirect_to items_path
         end
 
         it 'diplays a flash message if user tries to access another users item, or non existent item' do
           session[:user] = john.id
-          get :show, id: item2.id
+          get :show, id: item2.slug
           expect(flash[:info]).to eq('Item does not exist!')
         end
       end
 
       context ' with non authenticated user' do
         it 'redirects to the root_path' do
-          get :show, id: item.id
+          get :show, id: item.slug
           expect(response).to redirect_to root_path
         end
 
         it 'displays a flash message' do
-          get :show, id: item.id
+          get :show, id: item.slug
+          expect(flash[:alert]).to eq('You must first sign in to access this page.')
+        end
+      end
+    end
+
+    describe 'DELETE destroy' do
+      
+      context 'with authenticated user' do
+
+        it 'destroys the selected record' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(Item.count).to eq(0)
+        end
+
+        it 'redirects to the items_path' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(response).to redirect_to items_path
+        end
+
+        it 'does not delete another users items' do
+          john = Fabricate(:user)
+          alice = Fabricate(:user)
+          item = Fabricate(:item, user_id: alice.id)
+          session[:user] = john.id
+          delete :destroy, id: item.slug
+          expect(Item.count).to eq(1)
+        end
+        
+        it 'diplays a flash message' do
+          john = Fabricate(:user)
+          session[:user] = john.id
+          item = Fabricate(:item, slug: 'item', user_id: john.id)
+          delete :destroy, id: item.slug
+          expect(flash[:info]).to eq("Item #{item.name} has been deleted.")
+        end
+      end
+      
+      context 'with non authenticated user' do
+        it 'redirects to the root path' do
+          delete :destroy, id: 'some-item'
+          expect(response).to redirect_to root_path
+        end
+        it 'displays an error message' do
+          delete :destroy, id: 'some-item'
           expect(flash[:alert]).to eq('You must first sign in to access this page.')
         end
       end
