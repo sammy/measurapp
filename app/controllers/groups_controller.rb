@@ -37,6 +37,18 @@ class GroupsController < ApplicationController
     flash[:success] = "Group #{@group.name.upcase} was successfully updated."
   end
 
+  def destroy
+    user = User.find(session[:user])
+    @group = user.groups.find_by(slug: params[:id])
+    if @group
+      @group.destroy
+      flash[:success] = "Group #{@group.name.upcase} has been successfully deleted."
+    else
+      flash[:alert] = "Something went wrong!"
+    end
+      redirect_to groups_path
+  end
+
   private
 
   def group_params
