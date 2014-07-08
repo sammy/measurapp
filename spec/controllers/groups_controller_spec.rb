@@ -205,25 +205,25 @@ describe GroupsController do
     end
 
     it 'sets the group instance variable' do
-      session[:user] = jim.id
+      set_current_user(jim)
       delete :destroy, id: group.slug
       expect(assigns(:group)).to eq(group)
     end
 
     it 'displays a flash message' do
-      session[:user] = jim.id
+      set_current_user(jim)
       delete :destroy, id: group.slug
       expect(flash[:success]).to eq("Group #{group.name.upcase} has been successfully deleted.")
     end
 
     it 'deletes the current users group from the database' do
-      session[:user] = jim.id
+      set_current_user(jim)
       delete :destroy, id: group.slug
       expect(Group.count).to eq(0)
     end
     
     it 'does not delete another users group' do
-      session[:user] = jim.id
+      set_current_user(jim)
       group2 = Fabricate(:group, user_id: 5)
       delete :destroy, id: group2.slug
       expect(flash[:alert]).to eq('Something went wrong!')
