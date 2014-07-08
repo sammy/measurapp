@@ -191,43 +191,44 @@ describe GroupsController do
 
   describe 'DELETE destroy' do
 
+    let(:jim)     { Fabricate(:user) }
+    let(:group)   { Fabricate(:group, user_id: jim.id) }
+
     it_behaves_like 'require login' do
       let(:action) { delete :destroy, id: 'some-group' }
     end
 
     it 'redirects to the groups path' do
-      jim = Fabricate(:user)
       set_current_user(jim)
-      group = Fabricate(:group, user_id: jim.id)
       delete :destroy, id: group.slug
       expect(response).to redirect_to groups_path
     end
 
     it 'sets the group instance variable' do
-      alice = Fabricate(:user)
-      session[:user] = alice.id
-      group = Fabricate(:group, user_id: alice.id)
-      binding.pry
+      session[:user] = jim.id
       delete :destroy, id: group.slug
       expect(assigns(:group)).to eq(group)
     end
 
-    # it 'displays a flash message' do
-    #   jim = Fabricate(:user)
-    #   set_current_user(jim)
-    #   group = Fabricate(:group, user_id: jim.id)
-    #   delete :destroy, id: group.slug
-    #   expect(flash[:success]).to eq("Group #{group.name.upcase} has been successfully deleted.")
-    # end
+    it 'displays a flash message' do
+      session[:user] = jim.id
+      delete :destroy, id: group.slug
+      expect(flash[:success]).to eq("Group #{group.name.upcase} has been successfully deleted.")
+    end
 
-    # it 'deletes the current users group from the database' do
-    #   jim = Fabricate(:user)
-    #   set_current_user(jim)
-    #   group = Fabricate(:group, user_id: jim.id)
-    #   delete :destroy, id: group.slug
-    #   expect(Group.count).to eq(0)
-    # end
-    it 'does not delete another users group'
+    it 'deletes the current users group from the database' do
+      session[:user] = jim.id
+      delete :destroy, id: group.slug
+      expect(Group.count).to eq(0)
+    end
+    
+    it 'does not delete another users group' do
+      session[:user] = jim.id
+      group2 = Fabricate(:group, user_id: 5)
+      delete :destroy, id: group2.slug
+      expect(flash[:alert]).to eq('Something went wrong!')
+      expect(Group.count).to eq(1)
+    end
 
   end
 end
