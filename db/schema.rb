@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702210554) do
+ActiveRecord::Schema.define(version: 20140710201627) do
 
   create_table "group_items", force: true do |t|
     t.integer  "group_id"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 20140702210554) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+  end
+
+  create_table "measures", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "min_value"
+    t.integer  "max_value"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
