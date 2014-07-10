@@ -2,6 +2,24 @@ require 'rails_helper'
 
 describe MeasuresController do
 
+  describe 'GET index' do
+
+    let(:joe)       { Fabricate(:user) }
+    let(:measure)   { Fabricate(:measure, user_id: joe.id) }
+
+    it_behaves_like 'require login' do
+      let(:action) { get :index }
+    end
+
+    before { set_current_user(joe) }
+
+    it 'assigns the measures instance variable with the current users measures' do
+      get :index
+      expect(assigns(:measure)).to eq(measure)
+    end
+
+  end
+
   describe 'GET new' do
 
     let(:joe) { Fabricate(:user) }
@@ -77,8 +95,9 @@ describe MeasuresController do
         post :create, measure: { name: 'my_measure', description: 'text', min_value: '10' }
         expect(flash[:alert]).to_not be_nil
       end
-    end
 
+      it 'does not save the object if minimum value is bigger than maximum value'
+    end
   end
 
 

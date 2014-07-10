@@ -1,6 +1,10 @@
 class MeasuresController < ApplicationController
 
   before_filter :check_session
+
+  def index
+    @measures = @current_user.measures
+  end
   
   def new
     @measure = Measure.new
@@ -17,7 +21,7 @@ class MeasuresController < ApplicationController
     end
   end
   
-
+  
   private
 
   def measure_params
