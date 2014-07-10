@@ -14,7 +14,10 @@ describe Measure do
       expect(Measure.first.type).to eq('Boolean')
     end
 
-    it 'returns scale if range is not 0 to 1'
+    it 'returns scale if range is not 0 to 1' do
+      Fabricate(:measure, min_value: 0, max_value: 10)
+      expect(Measure.first.type).to eq('Scale')
+    end
   end
 
   describe '#range' do
@@ -23,5 +26,4 @@ describe Measure do
       expect(measure.range).to eq(0..10)
     end
   end
-
 end
