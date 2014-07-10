@@ -16,7 +16,7 @@ class MeasuresController < ApplicationController
       flash[:success] = "Measure #{@measure.name.upcase} successfully created"
       redirect_to new_measure_path
     elsif @measure.errors
-      flash[:alert] = @measure.errors.full_messages
+      flash[:alert] = @measure.errors.full_messages.join("<br>").html_safe
       render :new
     end
   end

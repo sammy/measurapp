@@ -14,26 +14,9 @@
       .small-3.columns
         = text_field_tag :search, 'search', class: 'radius'
 
-    %table{width: '100%'}
-      %thead
-        %tr
-          %th Name
-          %th Type
-          %th Linked to
-          %th Actions
-        %tbody
-          -@measures.each do |measure|
-            %tr
-              %td= measure.name
-              %td= measure.type
-              %td
-                %span.label.secondary.round Groups Placeholder
-                %span.label.secondary.round Groups Placeholder
-              %td
-                =  link_to "View"
-                |
-                =  link_to "Edit"
-                |
-                =  link_to "Delete"
+    =render 'measures_table' if @measures
+    =render 'shared/no_objects_message', :object => 'measures' if @measures.empty?
+
+
             
 

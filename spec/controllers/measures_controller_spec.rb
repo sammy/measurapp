@@ -15,9 +15,8 @@ describe MeasuresController do
 
     it 'assigns the measures instance variable with the current users measures' do
       get :index
-      expect(assigns(:measure)).to eq(measure)
+      expect(assigns(:measures)).to eq([measure])
     end
-
   end
 
   describe 'GET new' do
@@ -96,9 +95,10 @@ describe MeasuresController do
         expect(flash[:alert]).to_not be_nil
       end
 
-      it 'does not save the object if minimum value is bigger than maximum value'
+      it 'does not save the object if minimum value is bigger than maximum value' do
+        post :create, measure: { name: 'my_measure', description: 'text', min_value: '10', max_value: '0' }
+        expect(Measure.count).to eq(0)
+      end
     end
   end
-
-
 end
