@@ -1,32 +1,31 @@
 .row
   .small-12.columns
-    %h2 #{fa_icon 'plus-circle'} New Scale Measure
+    %h2 #{fa_icon 'plus-circle'} New Measure
     %hr
-    %form
+    =form_for @measure do |f|
 
       .row
         .small-5.columns
           .small-3.columns
-            =label_tag :name, 'Name', class: 'left inline'
+            =f.label :name, 'Name', class: 'left inline'
           .small-9.columns
-            =text_field_tag :name, nil ,class: 'radius'
+            =f.text_field :name, class: 'radius'
 
       .row
         .small-5.columns
           .small-3.columns
-            =label_tag :description, 'Description', class: 'left inline'
+            =f.label :description, 'Description', class: 'left inline'
           .small-9.columns
-            =text_area_tag :description, nil, rows: '5', class: 'radius'
+            =f.text_area :description, rows: '5', class: 'radius'
 
       .row
         .small-5.colums
           .small-3.columns
-            =label_tag :scale, 'Scale', class: 'left inline'
+            =f.label :scale, 'Scale', class: 'left inline'
           .small-4.columns
-            =text_field_tag :min, nil, class: 'radius', placeholder: 'minimum'
+            =f.text_field :min_value, class: 'radius', placeholder: 'minimum'
           .small-4.columns
-            =text_field_tag :max, nil, class: 'radius', placeholder: 'maximum'
+            =f.text_field :max_value, class: 'radius', placeholder: 'maximum'
       .row
         .small-5.columns
-          %a.button.success.small.radius.right Save
-      
+          =f.submit 'Save', data: { disable_with: 'Saving...' }, class: 'button success small radius right'     

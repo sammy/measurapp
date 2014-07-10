@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   resources :items
 
-  resources :measures, only: [:new]
+  resources :measures, only: [:new, :create]
 end
