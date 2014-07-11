@@ -11,6 +11,6 @@
     
 
     - if @items.empty? 
-      = render 'no_items_message'
+      = render 'shared/no_objects_message', :object => 'Items'
     - else
       = render 'items_table'
