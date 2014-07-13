@@ -27,10 +27,13 @@
         / Left Nav Section
         %ul.left
           %li
-            %a{href: "#"} My Groups 
+            =link_to "My Groups", groups_path
+            / %a{href: "#"} My Groups 
           %li
-            %a{href: "#"} My Units
+            =link_to "My Items", items_path
+            / %a{href: "#"} My Units
           %li
-            %a{href: "#"} My Measures
+            =link_to "My Measures", measures_path
+            / %a{href: "#"} My Measures
           %li
             %a{href: "#"} Reports
