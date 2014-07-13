@@ -31,13 +31,8 @@ class ItemsController < ApplicationController
   end
   
   def edit
-    if @current_user
-      @item = @current_user.items.find_by(slug: params[:id])
-      @groups = @current_user.groups
-    else
-      redirect_to root_path
-      flash[:alert] = 'Not authorized! You must sign in first.'
-    end
+    @item = @current_user.items.find_by(slug: params[:id])
+    @groups = @current_user.groups
   end
 
   def update

@@ -4,12 +4,8 @@
     %hr
     .row
       .small-6.columns
-        =link_to "Create Measure", new_measure_path, class: 'button small success dropdown radius' 
-        / %a{ href: '#', class: 'button small success dropdown radius', data: {dropdown: 'actions'}} Create Measure
-        / %ul{ id: 'actions', class: 'f-dropdown'}
-        /   %li #{fa_icon 'plus'} Boolean
-        /   %li #{fa_icon 'plus'} Scale
-        / = submit_tag 'New Unit', class: 'button success radius small'
+        =link_to "Create Measure", new_measure_path, class: 'button small success dropdown radius'
+        
       .small-3.columns
       .small-3.columns
         = text_field_tag :search, 'search', class: 'radius'
