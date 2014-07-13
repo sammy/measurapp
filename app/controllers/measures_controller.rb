@@ -20,6 +20,10 @@ class MeasuresController < ApplicationController
       render :new
     end
   end
+
+  def show
+
+  end
   
   
   private

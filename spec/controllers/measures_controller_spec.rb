@@ -101,4 +101,26 @@ describe MeasuresController do
       end
     end
   end
+
+  describe 'GET show' do
+
+    let(:user)  { Fabricate(:user) }
+    let(:measure)  { Fabricate(:measure, user_id: user.id)}
+
+    it_behaves_like 'require login' do
+      let(:action) { get :show, id: 'someid'}
+    end
+
+
+    it 'assigns the measure instance variable' do
+      set_current_user(user)
+      get :show, id: measure.slug
+      expect(assigns(:measure)).to be_true
+    end
+
+    it 'assigns the correct measure in the instance variable'
+    it 'renders the show template'
+
+  end
+
 end
