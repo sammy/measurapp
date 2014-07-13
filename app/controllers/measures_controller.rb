@@ -22,7 +22,22 @@ class MeasuresController < ApplicationController
   end
 
   def show
+    @measure = @current_user.measures.find_by(slug: params[:id])
+    if @measure.nil? 
+      flash[:alert] = "Measure not found!"
+      redirect_to home_path
+    end
+  end
 
+  def destroy
+    @measure = @current_user.measures.find_by(slug: params[:id])
+    if @measure
+      @measure.destroy
+      flash[:success] = "Measure #{@measure.name.upcase} has been successfully deleted" 
+    else
+      flash[:alert] = 'Measure not found'
+    end
+    redirect_to measures_path
   end
   
   

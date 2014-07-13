@@ -104,23 +104,73 @@ describe MeasuresController do
 
   describe 'GET show' do
 
-    let(:user)  { Fabricate(:user) }
-    let(:measure)  { Fabricate(:measure, user_id: user.id)}
+    let(:user)          { Fabricate(:user) }
+    let(:measure)       { Fabricate(:measure, user_id: user.id)}
+    let(:other_measure) { Fabricate(:measure) }
 
     it_behaves_like 'require login' do
       let(:action) { get :show, id: 'someid'}
     end
 
-
     it 'assigns the measure instance variable' do
       set_current_user(user)
       get :show, id: measure.slug
-      expect(assigns(:measure)).to be_true
+      expect(assigns(:measure)).to be_present
     end
 
-    it 'assigns the correct measure in the instance variable'
-    it 'renders the show template'
-
+    it 'assigns the correct measure in the instance variable' do
+      set_current_user(user)
+      get :show, id: measure.slug
+      expect(assigns(:measure)).to eq(measure)
+    end
+    
+    it 'does not show another users measure' do
+      set_current_user(user)
+      get :show, id: other_measure.slug
+      expect(response).to redirect_to home_path
+      expect(flash[:alert]).to eq('Measure not found!')    
+    end
   end
 
+  describe 'DELETE destroy' do
+
+    let(:user)      { Fabricate(:user) }
+    let(:measure)   { Fabricate(:measure, user_id: user.id) }
+    let(:other_measure) { Fabricate(:measure) }
+
+    it_behaves_like 'require login' do
+      let(:action) { delete :destroy, id: measure.slug }
+    end
+
+    it 'sets the measure instance variable' do
+      set_current_user(user)
+      delete :destroy, id: measure.slug
+      expect(assigns(:measure)).to be_present
+    end
+
+    it 'deletes the measure from the database' do  
+      set_current_user(user)
+      delete :destroy, id: measure.slug
+      expect(Measure.find_by(slug: measure.slug)).to be_nil
+    end
+
+    it 'redirects to the measures path' do
+      set_current_user(user)
+      delete :destroy, id: measure.slug
+      expect(response).to redirect_to measures_path
+    end
+
+    it 'displays a flash message' do
+      set_current_user(user)
+      delete :destroy, id: measure.slug
+      expect(flash[:success]).to eq("Measure #{measure.name.upcase} has been successfully deleted")
+    end
+
+    it 'does not delete another users measures' do
+      set_current_user(user)
+      delete :destroy, id: other_measure.slug
+      expect(flash[:alert]).to eq('Measure not found')
+      expect(Measure.find_by(slug: other_measure.slug)).to_not be_nil
+    end
+  end
 end
