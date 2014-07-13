@@ -4,7 +4,7 @@ class Measure < ActiveRecord::Base
 
   belongs_to  :user
   has_many    :items
-  
+
   validates_presence_of :name, :min_value, :max_value
   validate :correct_range, on: [:create, :update]
 
@@ -25,13 +25,17 @@ class Measure < ActiveRecord::Base
   end
 
   def groups
+    
   end
 
   def groups=(groups)
-    # groups.each do |g|
-    #   group = Group.find(g)
-    #   group.assign_measure if group
-    # end
+    groups.shift
+    groups.each do |g|
+      group = Group.find(g) 
+      group.items.each do |item|
+        MeasureItem.create(measure_id: id, item_id: item.id)
+      end
+    end
   end
 
 end
