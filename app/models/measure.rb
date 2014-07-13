@@ -21,22 +21,4 @@ class Measure < ActiveRecord::Base
       errors.add(:min_value, "can't be larger than maximum value!") if self.min_value > self.max_value
     end
   end
-
-  # def generate_slug
-  #   slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/,'')
-  #   if Measure.where(:slug => slug).count > 0
-  #     n = 1
-  #     while Measure.where(:slug => "#{slug}-#{n}").count > 0
-  #       n += 1
-  #     end
-  #     self.slug = "#{slug}-#{n}"
-  #   else
-  #     self.slug = "#{slug}"
-  #   end 
-  # end
-
-  # def to_param
-  #   self.slug
-  # end
-
 end
