@@ -33,6 +33,12 @@ describe MeasuresController do
       expect(assigns(:measure)).to be_kind_of Measure
     end
 
+    it 'sets the groups instance variable' do
+      set_current_user(joe)
+      get :new
+      expect(assigns(:groups)).to be_present
+    end
+
   end
 
   describe 'POST create' do
