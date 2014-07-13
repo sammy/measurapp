@@ -21,7 +21,8 @@ describe MeasuresController do
 
   describe 'GET new' do
 
-    let(:joe) { Fabricate(:user) }
+    let(:joe)     { Fabricate(:user) }
+    let(:group1)  { Fabricate(:group, user_id: joe.id) }
 
     it_behaves_like 'require login' do
       let(:action) { get :new }
@@ -36,7 +37,7 @@ describe MeasuresController do
     it 'sets the groups instance variable' do
       set_current_user(joe)
       get :new
-      expect(assigns(:groups)).to be_present
+      expect(assigns(:groups)).to eq([group1])
     end
 
   end

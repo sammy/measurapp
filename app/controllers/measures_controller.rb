@@ -8,9 +8,11 @@ class MeasuresController < ApplicationController
   
   def new
     @measure = Measure.new
+    @groups = @current_user.groups
   end
 
   def create
+    binding.pry
     @measure = Measure.new(measure_params.merge(user_id: @current_user.id))
     if @measure.save
       flash[:success] = "Measure #{@measure.name.upcase} successfully created"
