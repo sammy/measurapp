@@ -15,6 +15,7 @@ class MeasuresController < ApplicationController
     binding.pry
     @measure = Measure.new(measure_params.merge(user_id: @current_user.id))
     if @measure.save
+      @measure.groups = params[:measure][:groups]
       flash[:success] = "Measure #{@measure.name.upcase} successfully created"
       redirect_to new_measure_path
     elsif @measure.errors
@@ -46,6 +47,6 @@ class MeasuresController < ApplicationController
   private
 
   def measure_params
-    params.require(:measure).permit(:name, :description, :min_value, :max_value)
+    params.require(:measure).permit(:name, :description, :min_value, :max_value, :groups)
   end
 end
