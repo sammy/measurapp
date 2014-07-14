@@ -40,9 +40,3 @@
       .row
         .small-5.columns
           =f.submit 'Save', data: { disable_with: 'Saving...' }, class: 'button success small radius right'
-
-
-/ =select_tag :groups, options_for_select( @groups.collect { |p| [ p['name'], p['id'] ]},
-/                                                    nil),
-/                                                    {}, 
-/                                                    { multiple: true, id: 'transfer_select', class: 'searchable'}
