@@ -1,0 +1,38 @@
+=form_for @measure do |f|
+
+  .row
+    .small-5.columns
+      .small-3.columns
+        =f.label :name, 'Name', class: 'left inline'
+      .small-9.columns
+        =f.text_field :name, class: 'radius'
+
+  .row
+    .small-5.columns
+      .small-3.columns
+        =f.label :description, 'Description', class: 'left inline'
+      .small-9.columns
+        =f.text_area :description, rows: '5', class: 'radius'
+
+  .row
+    .small-5.columns
+      .small-3.columns
+        =f.label :scale, 'Scale', class: 'left inline'
+      .small-4.columns
+        =f.text_field :min_value, class: 'radius', placeholder: 'minimum'
+      .small-4.columns
+        =f.text_field :max_value, class: 'radius', placeholder: 'maximum'
+
+  .row
+    .small-5.columns
+      .small-3.columns
+        = f.label :items, 'Groups', class: 'left inline'
+      .small-9.columns
+        =f.select :groups, options_for_select( @groups.collect { |p| [ p['name'], p['id'] ]},
+                                               nil),
+                                               {}, 
+                                               { multiple: true, id: 'transfer_select', class: 'searchable'}
+
+  .row
+    .small-5.columns
+      =f.submit 'Save', data: { disable_with: 'Saving...' }, class: 'button success small radius right'
