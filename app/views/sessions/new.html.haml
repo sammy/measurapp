@@ -1,22 +1,22 @@
 .row
-  .small-4.small-centered.columns
+  .small-10.medium-4.small-centered.columns
     = form_tag sessions_path do
       %fieldset
         %legend Login
         .row
-          .small-6.columns
+          .small-12.medium-6.columns
             = label_tag :username
-          .small-6.columns
+          .small-12.medium-6.columns
             = text_field_tag :username
         .row
-          .small-6.columns
+          .small-12.medium-6.columns
             = label_tag :password
-          .small-6.columns
+          .small-12.medium-6.columns
             = password_field_tag :password
         .row
-          .small-6.columns
+          .small-6.medium-6.columns
             .loglinks
               = link_to 'Register now', register_path
               = link_to  'Forgot Password?'
-          .small-6.columns
+          .small-10.medium-6.columns.right
             = submit_tag 'Login', class: 'button success small radius right'

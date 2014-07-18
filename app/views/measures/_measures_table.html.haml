@@ -11,8 +11,9 @@
           %td= measure.name
           %td= measure.type
           %td
-            %span.label.secondary.round Groups Placeholder
-            %span.label.secondary.round Groups Placeholder
+            - measure.groups.each do |group|
+              =link_to measure_group_path(group, measure: measure.slug) do
+                %span.label.secondary.round= group.name
           %td
             =  link_to "View"
             |

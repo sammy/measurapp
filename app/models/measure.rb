@@ -3,7 +3,8 @@ class Measure < ActiveRecord::Base
   include Sluggable
 
   belongs_to  :user
-  has_many    :items
+  has_many    :measure_items
+  has_many    :items, through: :measure_items
 
   validates_presence_of :name, :min_value, :max_value
   validate :correct_range, on: [:create, :update]
@@ -25,7 +26,13 @@ class Measure < ActiveRecord::Base
   end
 
   def groups
-    
+    groups_by_id = measure_items.map(&:group_id).uniq
+    group_objects = []
+    groups_by_id.each do |id|
+      group = Group.find(id)
+      group_objects << group
+    end
+    group_objects
   end
 
   def groups=(groups)
@@ -33,9 +40,8 @@ class Measure < ActiveRecord::Base
     groups.each do |g|
       group = Group.find(g) 
       group.items.each do |item|
-        MeasureItem.create(measure_id: id, item_id: item.id)
+        MeasureItem.create(measure_id: id, item_id: item.id, group_id: group.id)
       end
     end
   end
-
 end

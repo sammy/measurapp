@@ -12,7 +12,6 @@ class MeasuresController < ApplicationController
   end
 
   def create
-    binding.pry
     @measure = Measure.new(measure_params.merge(user_id: @current_user.id))
     if @measure.save
       @measure.groups = params[:measure][:groups]

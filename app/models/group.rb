@@ -9,8 +9,4 @@ class Group < ActiveRecord::Base
 
   before_create :generate_slug
 
-  def assign_measure
-    # items.each
-  end
-
 end

@@ -49,6 +49,11 @@ class GroupsController < ApplicationController
       redirect_to groups_path
   end
 
+  def measure
+    @group = Group.find_by(slug: params[:id])
+    @measure = Measure.find_by(slug: params[:measure])
+  end
+
   private
 
   def group_params
