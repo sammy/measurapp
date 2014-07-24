@@ -1,21 +1,22 @@
 .row
   .small-12.columns
-    %h3 Measure #{@group.name.capitalize} for #{@measure.name.capitalize} 
+    %h3 Measure #{@group.name.capitalize} for #{@measure.name.capitalize}!
     %hr
 
 .row
   .small-12.columns
     - @group.items.each do |item|
-      .row
-        .small-6.columns
-          =item.name
-        .small-6.columns
-          .row
-            .small-10.medium-11.columns
-              .range-slider{data: {slider: '', options: "display_selector: #sliderOutput#{item.id}; start: #{@measure.min_value}; end: #{@measure.max_value}"}}
-                %span.range-slider-handle
-                %span.range-slider-active-segment
-            .small-2.medium-1.columns
-              %span{id: "sliderOutput#{item.id}"}
-
+      =form_tag('/measurement/create') do
+        .row
+          .small-6.columns
+            =item.name
+          .small-6.columns
+            .row
+              .small-8.medium-9.columns
+                .range-slider{data: {slider: '', options: "display_selector: #sliderOutput#{item.id}; start: #{@measure.min_value}; end: #{@measure.max_value}"}}
+                  %span.range-slider-handle
+                  %span.range-slider-active-segment
+                =hidden_field_tag "sliderOutput#{item.id}"
+              .small-3.medium-3.columns
+                =submit_tag "Submit", class: 'button radius success tiny'
 
