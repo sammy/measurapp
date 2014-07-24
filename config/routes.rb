@@ -13,9 +13,13 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create]
 
-  resources :groups
+  resources :groups do
+    get 'measure(/:measure)', action: 'measure', on: :member, as: 'measure'
+  end
 
   resources :users, only: [:create]
 
   resources :items
+
+  resources :measures
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140702210554) do
+ActiveRecord::Schema.define(version: 20140718205456) do
 
   create_table "group_items", force: true do |t|
     t.integer  "group_id"
@@ -32,6 +32,25 @@ ActiveRecord::Schema.define(version: 20140702210554) do
   create_table "items", force: true do |t|
     t.string   "name"
     t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
+
+  create_table "measure_items", force: true do |t|
+    t.integer  "measure_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "group_id"
+  end
+
+  create_table "measures", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "min_value"
+    t.integer  "max_value"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

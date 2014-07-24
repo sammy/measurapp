@@ -175,6 +175,7 @@ describe GroupsController do
       jim = Fabricate(:user)
       set_current_user(jim)
       group = Fabricate(:group, user_id: jim.id)
+      # binding.pry
       put :update, id: group.slug, group: { name: group.name, description: 'a new description' }
       expect(Group.first.description).to eq('a new description')
     end

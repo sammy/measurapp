@@ -9,8 +9,5 @@
       .small-3.columns
         = text_field_tag :search, 'search', class: 'radius'
     
-
-    - if @items.empty? 
-      = render 'no_items_message'
-    - else
-      = render 'items_table'
+      = render 'items_table' if @items
+      = render 'shared/no_objects_message', :object => 'Items' if @items.empty?

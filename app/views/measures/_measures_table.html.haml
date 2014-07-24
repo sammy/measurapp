@@ -1,0 +1,22 @@
+%table{width: '100%'}
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Linked to
+      %th Actions
+    %tbody
+      -@measures.each do |measure|
+        %tr
+          %td= measure.name
+          %td= measure.type
+          %td
+            - measure.groups.each do |group|
+              =link_to measure_group_path(group, measure: measure.slug) do
+                %span.label.secondary.round= group.name
+          %td
+            =  link_to "View"
+            |
+            =  link_to "Edit"
+            |
+            =  link_to "Delete"

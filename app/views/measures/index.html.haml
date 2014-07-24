@@ -1,0 +1,18 @@
+.row
+  .small-12.columns
+    %h2 #{fa_icon 'sort-amount-desc'} Measures
+    %hr
+    .row
+      .small-6.columns
+        =link_to "Create Measure", new_measure_path, class: 'button small success dropdown radius'
+        
+      .small-3.columns
+      .small-3.columns
+        = text_field_tag :search, 'search', class: 'radius'
+
+    =render 'measures_table' if @measures
+    =render 'shared/no_objects_message', :object => 'measures' if @measures.empty?
+
+
+            
+
